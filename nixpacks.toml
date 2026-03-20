@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["maven", "jdk17"]
-
-[phases.build]
-cmds = ["cd backend/propiedad-residencia && mvn clean package -DskipTests"]
-
-[start]
-cmd = "cd backend/propiedad-residencia && java -jar target/*.jar"
