@@ -1421,12 +1421,10 @@
 
       // Actualizar SVG donut si existe
       const donutPaths = document.querySelectorAll('.donut-segment, [class*="donut"]');
-      console.log('Donut elements:', donutPaths.length);
 
       // Actualizar números del donut
       const entries = Object.entries(porTipo).filter(([, v]) => v > 0);
       const maxTipo = entries.reduce((a, b) => b[1] > a[1] ? b : a, ['', 0]);
-      console.log('Tipo más frecuente:', maxTipo[0], maxTipo[1]);
     }
 
     function actualizarBarrasEstado(sol) {
@@ -1451,7 +1449,6 @@
         }
       });
 
-      console.log('Datos barras estado:', barData);
     }
 
     document.querySelector('.btn-logout').onclick = () => Auth.logout();
