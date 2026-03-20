@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Reportes · Residencia</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0b0d13;
+      --surface: #13151c;
+      --surface2: #1a1d26;
+      --border: #252836;
+      --border2: #2e3245;
+      --accent: #c8a96e;
+      --accent-dim: #a0834d;
+      --accent-bg: rgba(200, 169, 110, 0.07);
+      --text: #e8e4dc;
+      --muted: #6e7180;
+      --muted2: #4a4e60;
+      --green: #6dbe8d;
+      --green-bg: rgba(109, 190, 141, 0.1);
+      --yellow: #e8c76d;
+      --yellow-bg: rgba(232, 199, 109, 0.1);
+      --red: #e07070;
+      --red-bg: rgba(224, 112, 112, 0.1);
+      --blue: #7aaee8;
+      --blue-bg: rgba(122, 174, 232, 0.1);
+      --purple: #a78bfa;
+      --purple-bg: rgba(167, 139, 250, 0.1);
+      --radius: 10px;
+      --sidebar-w: 250px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 1.5rem 1.4rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-text strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+    }
+
+    .logo-text span {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.1rem;
+      display: block;
+    }
+
+    .admin-badge {
+      margin: 0.85rem 1.4rem;
+      padding: 0.5rem 0.85rem;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-dim);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .admin-badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    .admin-badge span {
+      font-size: 0.7rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .sidebar-user {
+      padding: 0.85rem 1.4rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .avatar-sm {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4a6fa5, #2d4a7a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .user-info strong {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .user-info span {
+      font-size: 0.67rem;
+      color: var(--muted);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 1rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+      overflow-y: auto;
+    }
+
+    .nav-section-label {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      padding: 0.7rem 0.65rem 0.3rem;
+      margin-top: 0.3rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.58rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.81rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 3px 3px 0;
+      margin-left: -0.75rem;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 0.1rem 0.45rem;
+      border-radius: 100px;
+    }
+
+    .nav-badge.gold {
+      background: var(--accent);
+      color: #0b0d13;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      width: 100%;
+      padding: 0.58rem 0.75rem;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.81rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .btn-logout:hover {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 58px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.8rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    .topbar-right {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .period-tabs {
+      display: flex;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.2rem;
+      gap: 0.2rem;
+    }
+
+    .ptab {
+      padding: 0.3rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      border: none;
+      background: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .ptab:hover {
+      color: var(--text);
+    }
+
+    .ptab.active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .export-btn {
+      padding: 0.45rem 0.85rem;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .export-btn:hover {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    .page {
+      padding: 1.6rem 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+    }
+
+    /* ── KPI ROW ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.85rem;
+      opacity: 0;
+      animation: fadeUp 0.4s 0.05s forwards;
+    }
+
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .kpi:hover {
+      border-color: var(--border2);
+    }
+
+    .kpi::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+    }
+
+    .kpi.k-accent::after {
+      background: var(--accent);
+    }
+
+    .kpi.k-green::after {
+      background: var(--green);
+    }
+
+    .kpi.k-blue::after {
+      background: var(--blue);
+    }
+
+    .kpi.k-yellow::after {
+      background: var(--yellow);
+    }
+
+    .kpi.k-purple::after {
+      background: var(--purple);
+    }
+
+    .kpi-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.55rem;
+    }
+
+    .kpi-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .kpi-trend {
+      font-size: 0.68rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .trend-up {
+      color: var(--green);
+    }
+
+    .trend-down {
+      color: var(--red);
+    }
+
+    .trend-flat {
+      color: var(--muted);
+    }
+
+    /* ── CHART GRID ── */
+    .chart-grid-top {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 1.1rem;
+      opacity: 0;
+      animation: fadeUp 0.4s 0.12s forwards;
+    }
+
+    .chart-grid-mid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.1rem;
+      opacity: 0;
+      animation: fadeUp 0.4s 0.2s forwards;
+    }
+
+    .chart-grid-bot {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.1rem;
+      opacity: 0;
+      animation: fadeUp 0.4s 0.28s forwards;
+    }
+
+    /* ── CARD ── */
+    .chart-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1rem 1.3rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+    }
+
+    .card-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .card-sub {
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .card-body {
+      padding: 1.2rem 1.3rem;
+    }
+
+    /* ── BAR CHART (SVG) ── */
+    .bar-chart-wrap {
+      position: relative;
+    }
+
+    .bar-chart-wrap svg {
+      width: 100%;
+      overflow: visible;
+    }
+
+    .chart-bar {
+      transition: opacity 0.2s;
+      cursor: pointer;
+    }
+
+    .chart-bar:hover {
+      opacity: 0.8;
+    }
+
+    .axis-label {
+      font-size: 9px;
+      fill: var(--muted2);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .grid-line {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+
+    .bar-value {
+      font-size: 9px;
+      fill: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── DONUT CHART ── */
+    .donut-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-center {
+      position: absolute;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .donut-center strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .donut-center span {
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .donut-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.85rem;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .legend-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 3px;
+    }
+
+    .legend-val {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ── LINE CHART ── */
+    .line-chart svg {
+      width: 100%;
+      overflow: visible;
+    }
+
+    .line-path {
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .line-area {
+      opacity: 0.15;
+    }
+
+    .line-dot {
+      cursor: pointer;
+      transition: r 0.15s;
+    }
+
+    .line-dot:hover {
+      r: 5;
+    }
+
+    /* ── MINI BAR (horizontal) ── */
+    .hbar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .hbar-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .hbar-label {
+      font-size: 0.74rem;
+      color: var(--text);
+      min-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hbar-track {
+      flex: 1;
+      height: 7px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .hbar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s;
+    }
+
+    .hbar-val {
+      font-size: 0.72rem;
+      color: var(--muted);
+      min-width: 28px;
+      text-align: right;
+    }
+
+    /* ── TABLE SIMPLE ── */
+    .simple-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .simple-table thead tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .simple-table th {
+      padding: 0.6rem 0.85rem;
+      font-size: 0.63rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .simple-table tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .simple-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .simple-table td {
+      padding: 0.72rem 0.85rem;
+      font-size: 0.78rem;
+    }
+
+    .rank-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      font-size: 0.62rem;
+      font-weight: 500;
+      padding: 0.18rem 0.55rem;
+      border-radius: 100px;
+    }
+
+    .badge::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .badge-green {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .badge-yellow {
+      background: var(--yellow-bg);
+      color: var(--yellow);
+    }
+
+    .badge-red {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    /* ── HEAT CALENDAR ── */
+    .heat-wrap {
+      overflow-x: auto;
+    }
+
+    .heat-grid {
+      display: flex;
+      gap: 3px;
+    }
+
+    .heat-col {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .heat-cell {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .heat-cell:hover {
+      opacity: 0.7;
+    }
+
+    .heat-months {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0.4rem;
+    }
+
+    .heat-month-label {
+      font-size: 0.6rem;
+      color: var(--muted2);
+      flex: 1;
+    }
+
+    .heat-days {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-right: 4px;
+    }
+
+    .heat-day-label {
+      font-size: 0.55rem;
+      color: var(--muted2);
+      height: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.4
+      }
+    }
+
+    @media(max-width:1200px) {
+      .chart-grid-top {
+        grid-template-columns: 1fr
+      }
+
+      .kpi-row {
+        grid-template-columns: repeat(3, 1fr)
+      }
+    }
+
+    @media(max-width:900px) {
+      .chart-grid-mid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .chart-grid-bot {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:768px) {
+      .sidebar {
+        display: none
+      }
+
+      .main {
+        margin-left: 0
+      }
+
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .chart-grid-mid {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b0d13"
+          stroke-width="2">
+          <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
+        </svg></div>
+      <div class="logo-text"><strong>Residencia</strong><span>Panel Administrativo</span></div>
+    </div>
+    <div class="admin-badge">
+      <div class="dot"></div><span>Administrador activo</span>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar-sm">MA</div>
+      <div class="user-info"><strong>María Álvarez</strong><span>Administradora General</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">General</span>
+      <a class="nav-item" href="dashboard.html">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </svg>
+        Dashboard
+      </a>
+      <a class="nav-item" href="solicitudes.html">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+          <rect x="9" y="3" width="6" height="4" rx="1" />
+        </svg>
+        Solicitudes <span class="nav-badge">7</span>
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+        Reservas <span class="nav-badge gold">3</span>
+      </a>
+      <span class="nav-section-label">Gestión</span>
+      <a class="nav-item" href="residentes.html">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        Residentes
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path
+            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+        </svg>
+        Personal
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        Comunicados
+      </a>
+      <span class="nav-section-label">Reportes</span>
+      <a class="nav-item active" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+        Reportes & Métricas
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <line x1="12" y1="1" x2="12" y2="23" />
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+        Finanzas / Pagos
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <h1>Reportes & Métricas</h1>
+      <div class="topbar-right">
+        <div class="period-tabs">
+          <button class="ptab" onclick="setPeriod(this,'7d')">7 días</button>
+          <button class="ptab active" onclick="setPeriod(this,'30d')">30 días</button>
+          <button class="ptab" onclick="setPeriod(this,'90d')">90 días</button>
+          <button class="ptab" onclick="setPeriod(this,'year')">Año</button>
+        </div>
+        <button class="export-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Exportar PDF
+        </button>
+      </div>
+    </header>
+
+    <main class="page">
+
+      <!-- KPI Row -->
+      <div class="kpi-row">
+        <div class="kpi k-accent">
+          <div class="kpi-label">Total solicitudes</div>
+          <div class="kpi-value" id="kpi-total">48</div>
+          <div class="kpi-trend trend-up">↑ +12% vs período anterior</div>
+        </div>
+        <div class="kpi k-green">
+          <div class="kpi-label">Tasa resolución</div>
+          <div class="kpi-value">87<span style="font-size:1.1rem;font-weight:300">%</span></div>
+          <div class="kpi-trend trend-up">↑ +5pp vs período anterior</div>
+        </div>
+        <div class="kpi k-blue">
+          <div class="kpi-label">Tiempo promedio</div>
+          <div class="kpi-value">2.4<span style="font-size:1.1rem;font-weight:300"> días</span></div>
+          <div class="kpi-trend trend-up">↓ −0.6 días (mejor)</div>
+        </div>
+        <div class="kpi k-yellow">
+          <div class="kpi-label">Recaudo cuotas</div>
+          <div class="kpi-value">$8.7<span style="font-size:1.1rem;font-weight:300">M</span></div>
+          <div class="kpi-trend trend-flat">→ 87% del esperado</div>
+        </div>
+        <div class="kpi k-purple">
+          <div class="kpi-label">Satisfacción</div>
+          <div class="kpi-value">4.6<span style="font-size:1.1rem;font-weight:300">/5</span></div>
+          <div class="kpi-trend trend-up">↑ +0.3 vs período anterior</div>
+        </div>
+      </div>
+
+      <!-- Row 1: Line chart + Donut -->
+      <div class="chart-grid-top">
+
+        <!-- Solicitudes por día (line) -->
+        <div class="chart-card">
+          <div class="card-header">
+            <div>
+              <h3>Solicitudes en el tiempo</h3>
+              <span class="card-sub">Nuevas vs Resueltas — últimos 30 días</span>
+            </div>
+            <div class="card-header-right">
+              <div style="display:flex;gap:1rem">
+                <span style="font-size:0.7rem;color:var(--muted);display:flex;align-items:center;gap:0.35rem"><span
+                    style="width:14px;height:2px;background:var(--accent);border-radius:1px;display:inline-block"></span>Nuevas</span>
+                <span style="font-size:0.7rem;color:var(--muted);display:flex;align-items:center;gap:0.35rem"><span
+                    style="width:14px;height:2px;background:var(--green);border-radius:1px;display:inline-block"></span>Resueltas</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body line-chart" id="lineChartWrap"></div>
+        </div>
+
+        <!-- Donut tipo solicitud -->
+        <div class="chart-card">
+          <div class="card-header">
+            <h3>Por tipo de solicitud</h3>
+          </div>
+          <div class="card-body">
+            <div class="donut-wrap" id="donutWrap"></div>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Barras por mes + Resolución personal + Ocupación -->
+      <div class="chart-grid-mid">
+
+        <!-- Barras mensuales -->
+        <div class="chart-card">
+          <div class="card-header">
+            <h3>Solicitudes mensuales</h3><span class="card-sub">2025</span>
+          </div>
+          <div class="card-body bar-chart-wrap" id="barChartWrap"></div>
+        </div>
+
+        <!-- Top personal -->
+        <div class="chart-card">
+          <div class="card-header">
+            <h3>Rendimiento del personal</h3><span class="card-sub">Solicitudes resueltas</span>
+          </div>
+          <div class="card-body" id="personalBars"></div>
+        </div>
+
+        <!-- Zonas más reservadas -->
+        <div class="chart-card">
+          <div class="card-header">
+            <h3>Reservas por espacio</h3><span class="card-sub">Top 5 este período</span>
+          </div>
+          <div class="card-body" id="espaciosBars"></div>
+        </div>
+
+      </div>
+
+      <!-- Row 3: Heatmap actividad + tabla top residentes -->
+      <div class="chart-grid-bot">
+
+        <!-- Heatmap -->
+        <div class="chart-card">
+          <div class="card-header">
+            <h3>Mapa de actividad</h3><span class="card-sub">Solicitudes por día del año</span>
+          </div>
+          <div class="card-body heat-wrap" id="heatWrap"></div>
+        </div>
+
+        <!-- Top residentes con más solicitudes -->
+        <div class="chart-card">
+          <div class="card-header">
+            <h3>Residentes más activos</h3><span class="card-sub">Por número de solicitudes</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table class="simple-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Residente</th>
+                  <th>Apto</th>
+                  <th>Solicitudes</th>
+                  <th>Estado cuota</th>
+                </tr>
+              </thead>
+              <tbody id="topResidentes"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // ── DATA ──
+    const tiposData = [
+      { label: 'Mantenimiento', val: 22, color: '#e8c76d' },
+      { label: 'Queja', val: 8, color: '#e07070' },
+      { label: 'Reserva', val: 9, color: '#7aaee8' },
+      { label: 'Visita', val: 5, color: '#6dbe8d' },
+      { label: 'Pago', val: 4, color: '#c8a96e' },
+    ];
+    const totalTipos = tiposData.reduce((a, b) => a + b.val, 0);
+
+    const mesesData = [
+      { m: 'Ene', n: 12, r: 10 }, { m: 'Feb', n: 18, r: 15 }, { m: 'Mar', n: 24, r: 20 },
+      { m: 'Abr', n: 15, r: 13 }, { m: 'May', n: 21, r: 19 }, { m: 'Jun', n: 9, r: 8 },
+      { m: 'Jul', n: 16, r: 14 }, { m: 'Ago', n: 22, r: 18 }, { m: 'Sep', n: 28, r: 25 },
+      { m: 'Oct', n: 19, r: 17 }, { m: 'Nov', n: 31, r: 27 }, { m: 'Dic', n: 14, r: 12 },
+    ];
+
+    const lineData30 = Array.from({ length: 30 }, (_, i) => {
+      const n = Math.floor(Math.random() * 6) + 1;
+      const r = Math.floor(Math.random() * n) + Math.floor(n * 0.5);
+      return { n, r: Math.min(r, n) };
+    });
+
+    const personalData = [
+      { nombre: 'Juan Pérez', resueltas: 18, color: '#6dbe8d' },
+      { nombre: 'Luis Gómez', resueltas: 12, color: '#7aaee8' },
+      { nombre: 'Carlos Torres', resueltas: 7, color: '#c8a96e' },
+      { nombre: 'Marcela Ríos', resueltas: 4, color: '#a78bfa' },
+    ];
+
+    const espaciosData = [
+      { nombre: 'Salón Comunal', reservas: 24, color: '#7aaee8' },
+      { nombre: 'Piscina', reservas: 18, color: '#6dbe8d' },
+      { nombre: 'Cancha Múltiple', reservas: 15, color: '#c8a96e' },
+      { nombre: 'Cancha de Tenis', reservas: 11, color: '#e8c76d' },
+      { nombre: 'Zona BBQ', reservas: 8, color: '#e07070' },
+    ];
+
+    const topRes = [
+      { nombre: 'Carlos Ramírez', apto: '301-A', sols: 8, cuota: 'al dia' },
+      { nombre: 'Ana López', apto: '104-A', sols: 6, cuota: 'al dia' },
+      { nombre: 'Diana Cruz', apto: '201-A', sols: 5, cuota: 'pendiente' },
+      { nombre: 'Camila Vargas', apto: '115-A', sols: 5, cuota: 'al dia' },
+      { nombre: 'Roberto Quiroga', apto: '210-A', sols: 4, cuota: 'al dia' },
+      { nombre: 'Jorge Medina', apto: '312-B', sols: 3, cuota: 'al dia' },
+    ];
+
+    // ── LINE CHART ──
+    function buildLineChart() {
+      const W = 560, H = 140, pad = { t: 10, r: 10, b: 24, l: 30 };
+      const cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+      const maxV = Math.max(...lineData30.flatMap(d => [d.n, d.r])) + 1;
+      const xStep = cW / (lineData30.length - 1);
+
+      const pts = (key, color) => {
+        const d = lineData30.map((v, i) => {
+          const x = pad.l + i * xStep;
+          const y = pad.t + cH - (v[key] / maxV) * cH;
+          return { x, y, v: v[key] };
+        });
+        const pathD = d.map((p, i) => i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`).join(' ');
+        const areaD = `${pathD} L${d[d.length - 1].x},${pad.t + cH} L${d[0].x},${pad.t + cH} Z`;
+        return `
+        <path d="${areaD}" fill="${color}" class="line-area"/>
+        <path d="${pathD}" stroke="${color}" class="line-path"/>
+        ${d.filter((_, i) => i % 5 === 0).map(p => `<circle cx="${p.x}" cy="${p.y}" r="3" fill="${color}" class="line-dot"/>`).join('')}`;
+      };
+
+      // Grid lines
+      const gridLines = [0, 0.25, 0.5, 0.75, 1].map(f => {
+        const y = pad.t + cH * (1 - f);
+        const val = Math.round(maxV * f);
+        return `<line x1="${pad.l}" y1="${y}" x2="${W - pad.r}" y2="${y}" class="grid-line"/>
+              <text x="${pad.l - 4}" y="${y + 3}" class="axis-label" text-anchor="end">${val}</text>`;
+      }).join('');
+
+      // X labels
+      const xLabels = [0, 6, 13, 20, 29].map(i => {
+        const x = pad.l + i * xStep;
+        return `<text x="${x}" y="${H - 4}" class="axis-label" text-anchor="middle">${i + 1} Mar</text>`;
+      }).join('');
+
+      document.getElementById('lineChartWrap').innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}">
+        ${gridLines}${pts('n', '#c8a96e')}${pts('r', '#6dbe8d')}${xLabels}
+      </svg>`;
+    }
+
+    // ── DONUT ──
+    function buildDonut() {
+      const R = 60, r = 38, cx = 80, cy = 80;
+      let startAngle = 0;
+      const slices = tiposData.map(d => {
+        const pct = d.val / totalTipos;
+        const angle = pct * 2 * Math.PI;
+        const x1 = cx + R * Math.sin(startAngle), y1 = cy - R * Math.cos(startAngle);
+        const x2 = cx + R * Math.sin(startAngle + angle), y2 = cy - R * Math.cos(startAngle + angle);
+        const xi1 = cx + r * Math.sin(startAngle), yi1 = cy - r * Math.cos(startAngle);
+        const xi2 = cx + r * Math.sin(startAngle + angle), yi2 = cy - r * Math.cos(startAngle + angle);
+        const large = angle > Math.PI ? 1 : 0;
+        const path = `M${x1},${y1} A${R},${R} 0 ${large} 1 ${x2},${y2} L${xi2},${yi2} A${r},${r} 0 ${large} 0 ${xi1},${yi1} Z`;
+        startAngle += angle;
+        return `<path d="${path}" fill="${d.color}" opacity="0.9" class="chart-bar"/>`;
+      });
+
+      document.getElementById('donutWrap').innerHTML = `
+      <div style="position:relative;width:160px;height:160px;flex-shrink:0">
+        <svg viewBox="0 0 160 160" width="160" height="160">${slices.join('')}</svg>
+        <div class="donut-center" style="inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <strong>${totalTipos}</strong><span>Total</span>
+        </div>
+      </div>`;
+
+      document.getElementById('donutLegend').innerHTML = tiposData.map(d => `
+      <div class="legend-row">
+        <div class="legend-left"><div class="legend-dot" style="background:${d.color}"></div>${d.label}</div>
+        <span class="legend-val">${d.val} <span style="font-size:0.65rem;color:var(--muted)">(${Math.round(d.val / totalTipos * 100)}%)</span></span>
+      </div>`).join('');
+    }
+
+    // ── BAR CHART MENSUAL ──
+    function buildBarChart() {
+      const W = 360, H = 150, pad = { t: 10, r: 10, b: 20, l: 30 };
+      const cW = W - pad.l - pad.r, cH = H - pad.t - pad.b;
+      const maxV = Math.max(...mesesData.flatMap(d => [d.n, d.r])) + 4;
+      const bW = (cW / mesesData.length) * 0.35;
+      const gap = (cW / mesesData.length);
+
+      const bars = mesesData.map((d, i) => {
+        const xBase = pad.l + i * gap + gap * 0.15;
+        const hN = (d.n / maxV) * cH, hR = (d.r / maxV) * cH;
+        return `
+        <rect x="${xBase}" y="${pad.t + cH - hN}" width="${bW}" height="${hN}" fill="#c8a96e" rx="2" class="chart-bar"/>
+        <rect x="${xBase + bW + 2}" y="${pad.t + cH - hR}" width="${bW}" height="${hR}" fill="#6dbe8d" rx="2" class="chart-bar"/>
+        <text x="${xBase + bW}" y="${H - 4}" class="axis-label" text-anchor="middle">${d.m}</text>`;
+      }).join('');
+
+      const gridLines = [0, 0.5, 1].map(f => {
+        const y = pad.t + cH * (1 - f);
+        return `<line x1="${pad.l}" y1="${y}" x2="${W - pad.r}" y2="${y}" class="grid-line"/>
+              <text x="${pad.l - 4}" y="${y + 3}" class="axis-label" text-anchor="end">${Math.round(maxV * f)}</text>`;
+      }).join('');
+
+      document.getElementById('barChartWrap').innerHTML = `<svg viewBox="0 0 ${W} ${H}">${gridLines}${bars}</svg>`;
+    }
+
+    // ── HORIZONTAL BARS ──
+    function buildPersonalBars() {
+      const maxV = Math.max(...personalData.map(d => d.resueltas));
+      document.getElementById('personalBars').innerHTML = personalData.map(d => `
+      <div class="hbar-row">
+        <span class="hbar-label">${d.nombre}</span>
+        <div class="hbar-track"><div class="hbar-fill" style="width:${(d.resueltas / maxV) * 100}%;background:${d.color}"></div></div>
+        <span class="hbar-val">${d.resueltas}</span>
+      </div>`).join('');
+    }
+
+    function buildEspaciosBars() {
+      const maxV = Math.max(...espaciosData.map(d => d.reservas));
+      document.getElementById('espaciosBars').innerHTML = espaciosData.map(d => `
+      <div class="hbar-row">
+        <span class="hbar-label">${d.nombre}</span>
+        <div class="hbar-track"><div class="hbar-fill" style="width:${(d.reservas / maxV) * 100}%;background:${d.color}"></div></div>
+        <span class="hbar-val">${d.reservas}</span>
+      </div>`).join('');
+    }
+
+    // ── HEATMAP ──
+    function buildHeatmap() {
+      // Generate fake activity data for 52 weeks
+      const weeks = 52, days = 7;
+      const data = Array.from({ length: weeks }, () =>
+        Array.from({ length: days }, () => Math.floor(Math.pow(Math.random(), 2) * 8))
+      );
+      const maxHeat = 7;
+      const getColor = (v) => {
+        if (v === 0) return 'var(--surface2)';
+        const alpha = 0.2 + 0.8 * (v / maxHeat);
+        return `rgba(200,169,110,${alpha.toFixed(2)})`;
+      };
+
+      const dayLabels = ['', 'L', '', 'X', '', 'V', ''];
+      const monthLabels = ['Ene', '', 'Feb', '', 'Mar', '', 'Abr', '', 'May', '', 'Jun', '', 'Jul', '', 'Ago', '', 'Sep', '', 'Oct', '', 'Nov', '', 'Dic', ''];
+
+      let monthRow = `<div style="display:flex;margin-left:20px;margin-bottom:3px">`;
+      for (let w = 0; w < weeks; w += 2) monthRow += `<div style="width:${2 * 15}px;font-size:0.58rem;color:var(--muted2)">${monthLabels[w] || ''}</div>`;
+      monthRow += `</div>`;
+
+      let dayCol = `<div class="heat-days">`;
+      dayLabels.forEach(d => dayCol += `<div class="heat-day-label">${d}</div>`);
+      dayCol += `</div>`;
+
+      let grid = `<div class="heat-grid">`;
+      data.forEach(week => {
+        grid += `<div class="heat-col">`;
+        week.forEach(v => { grid += `<div class="heat-cell" style="background:${getColor(v)}" title="${v} solicitudes"></div>`; });
+        grid += `</div>`;
+      });
+      grid += `</div>`;
+
+      document.getElementById('heatWrap').innerHTML = `
+      ${monthRow}
+      <div style="display:flex">${dayCol}${grid}</div>
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.75rem">
+        <span style="font-size:0.62rem;color:var(--muted2)">Menos</span>
+        ${[0, 2, 4, 6, 8].map(v => `<div style="width:11px;height:11px;border-radius:2px;background:${getColor(v)}"></div>`).join('')}
+        <span style="font-size:0.62rem;color:var(--muted2)">Más</span>
+      </div>`;
+    }
+
+    // ── TOP RESIDENTES ──
+    function buildTopResidentes() {
+      document.getElementById('topResidentes').innerHTML = topRes.map((r, i) => `
+      <tr>
+        <td><span class="rank-num">${i + 1}</span></td>
+        <td style="font-size:0.8rem;font-weight:500">${r.nombre}</td>
+        <td style="font-size:0.72rem;color:var(--muted)">${r.apto}</td>
+        <td style="text-align:center">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--accent);font-weight:600">${r.sols}</span>
+        </td>
+        <td>${r.cuota === 'al dia' ? '<span class="badge badge-green">Al día</span>' : '<span class="badge badge-red">Pendiente</span>'}</td>
+      </tr>`).join('');
+    }
+
+    // ── PERIOD SWITCHER ──
+    function setPeriod(btn, period) {
+      document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // Simular cambio de datos
+      const multiplers = { '7d': 0.3, '30d': 1, '90d': 2.8, 'year': 11 };
+      const m = multiplers[period] || 1;
+      document.getElementById('kpi-total').textContent = Math.round(48 * m);
+      buildLineChart();
+    }
+
+    // ── INIT ──
+    buildLineChart();
+    buildDonut();
+    buildBarChart();
+    buildPersonalBars();
+    buildEspaciosBars();
+    buildHeatmap();
+    buildTopResidentes();
+  </script>
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/auth.js"></script>
+  <script>
+    Auth.proteger('ADMIN');
+
+    async function cargarReportes() {
+      try {
+        const [dashboard, porTipo] = await Promise.all([
+          api.get('/reportes/dashboard'),
+          api.get('/reportes/solicitudes-por-tipo')
+        ]);
+
+        const sol = dashboard.solicitudes;
+        const res = dashboard.residentes;
+
+        // ── KPI total solicitudes ──
+        const totalSol = sol.abiertas + sol.resueltas;
+        const kpiTotal = document.getElementById('kpi-total');
+        if (kpiTotal) kpiTotal.textContent = totalSol;
+
+        // ── Tasa de resolución ──
+        const tasaRes = totalSol > 0 ? Math.round((sol.resueltas / totalSol) * 100) : 0;
+        const kpiVals = document.querySelectorAll('.kpi-value');
+        if (kpiVals[1]) kpiVals[1].innerHTML = `${tasaRes}<span style="font-size:1.1rem;font-weight:300">%</span>`;
+
+        // ── Cuotas al día ──
+        if (kpiVals[3]) kpiVals[3].innerHTML = `${res.pctCuotasAlDia}<span style="font-size:1.1rem;font-weight:300">%</span>`;
+
+        // ── Actualizar leyenda del donut con datos reales ──
+        actualizarDonut(porTipo);
+
+        // ── Actualizar barras de estado ──
+        actualizarBarrasEstado(sol);
+
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    function actualizarDonut(porTipo) {
+      const total = Object.values(porTipo).reduce((a, b) => a + b, 0);
+      if (!total) return;
+
+      const colores = {
+        MANTENIMIENTO: '#e8c76d',
+        QUEJA: '#e07070',
+        RESERVA: '#7aaee8',
+        VISITA: '#6dbe8d',
+        PAGO: '#c8a96e',
+        OTRO: '#7a7d8a',
+      };
+
+      // Actualizar leyenda
+      const leyendas = document.querySelectorAll('.legend-item');
+      if (leyendas.length) {
+        const entries = Object.entries(porTipo).filter(([, v]) => v > 0);
+        leyendas.forEach((el, i) => {
+          if (entries[i]) {
+            const [key, val] = entries[i];
+            const dot = el.querySelector('.legend-dot');
+            const label = el.querySelector('span') || el;
+            if (dot) dot.style.background = colores[key] || '#888';
+            if (label) label.textContent = `${key} (${val})`;
+          }
+        });
+      }
+
+      // Actualizar SVG donut si existe
+      const donutPaths = document.querySelectorAll('.donut-segment, [class*="donut"]');
+      console.log('Donut elements:', donutPaths.length);
+
+      // Actualizar números del donut
+      const entries = Object.entries(porTipo).filter(([, v]) => v > 0);
+      const maxTipo = entries.reduce((a, b) => b[1] > a[1] ? b : a, ['', 0]);
+      console.log('Tipo más frecuente:', maxTipo[0], maxTipo[1]);
+    }
+
+    function actualizarBarrasEstado(sol) {
+      const max = Math.max(sol.sinAsignar, sol.pendientes || 0, sol.enProceso, sol.resueltas, 1);
+
+      const barData = [
+        { estado: 'Sin asignar', val: sol.sinAsignar, color: 'var(--red)' },
+        { estado: 'Pendiente', val: sol.pendientes || 0, color: 'var(--muted)' },
+        { estado: 'En proceso', val: sol.enProceso, color: 'var(--yellow)' },
+        { estado: 'Resuelto', val: sol.resueltas, color: 'var(--green)' },
+      ];
+
+      // Buscar barras por estado en el HTML
+      const barWraps = document.querySelectorAll('.bar-wrap, .chart-bar');
+      barWraps.forEach((wrap, i) => {
+        if (barData[i]) {
+          const bar = wrap.querySelector('.bar, rect, [class*="bar"]');
+          if (bar) {
+            const pct = Math.round((barData[i].val / max) * 100);
+            bar.style.height = pct + '%';
+          }
+        }
+      });
+
+      console.log('Datos barras estado:', barData);
+    }
+
+    document.querySelector('.btn-logout').onclick = () => Auth.logout();
+    cargarReportes();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Solicitudes · Residencia</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0b0d13;
+      --surface: #13151c;
+      --surface2: #1a1d26;
+      --surface3: #1e2230;
+      --border: #252836;
+      --border2: #2e3245;
+      --accent: #c8a96e;
+      --accent-dim: #a0834d;
+      --accent-bg: rgba(200, 169, 110, 0.07);
+      --text: #e8e4dc;
+      --muted: #6e7180;
+      --muted2: #4a4e60;
+      --green: #6dbe8d;
+      --green-bg: rgba(109, 190, 141, 0.1);
+      --yellow: #e8c76d;
+      --yellow-bg: rgba(232, 199, 109, 0.1);
+      --red: #e07070;
+      --red-bg: rgba(224, 112, 112, 0.1);
+      --blue: #7aaee8;
+      --blue-bg: rgba(122, 174, 232, 0.1);
+      --radius: 10px;
+      --sidebar-w: 250px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 1.5rem 1.4rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-text strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+    }
+
+    .logo-text span {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.1rem;
+      display: block;
+    }
+
+    .admin-badge {
+      margin: 0.85rem 1.4rem;
+      padding: 0.5rem 0.85rem;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-dim);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .admin-badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    .admin-badge span {
+      font-size: 0.7rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .sidebar-user {
+      padding: 0.85rem 1.4rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .avatar-sm {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4a6fa5, #2d4a7a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .user-info strong {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .user-info span {
+      font-size: 0.67rem;
+      color: var(--muted);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 1rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+      overflow-y: auto;
+    }
+
+    .nav-section-label {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      padding: 0.7rem 0.65rem 0.3rem;
+      margin-top: 0.3rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.58rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.81rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 3px 3px 0;
+      margin-left: -0.75rem;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 0.1rem 0.45rem;
+      border-radius: 100px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .nav-badge.gold {
+      background: var(--accent);
+      color: #0b0d13;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      width: 100%;
+      padding: 0.58rem 0.75rem;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.81rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .btn-logout:hover {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 58px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.8rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    .topbar-right {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: #0b0d13;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary:hover {
+      background: #d4b87a;
+    }
+
+    .page {
+      padding: 1.6rem 1.8rem;
+      flex: 1;
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    /* ── LEFT: tabla ── */
+    .col-main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Kanban tabs */
+    .kanban-tabs {
+      display: flex;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.3rem;
+      width: fit-content;
+      opacity: 0;
+      animation: fadeUp 0.4s 0.05s forwards;
+    }
+
+    .ktab {
+      padding: 0.45rem 1rem;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: none;
+      background: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .ktab:hover {
+      color: var(--text);
+    }
+
+    .ktab.active {
+      background: var(--surface2);
+      color: var(--text);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .ktab-count {
+      font-size: 0.62rem;
+      font-weight: 600;
+      padding: 0.1rem 0.4rem;
+      border-radius: 100px;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      opacity: 0;
+      animation: fadeUp 0.4s 0.1s forwards;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 280px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      padding: 0.55rem 0.9rem 0.55rem 2.3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--accent-dim);
+    }
+
+    .search-wrap input::placeholder {
+      color: var(--muted2);
+    }
+
+    .flt {
+      padding: 0.55rem 1.8rem 0.55rem 0.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236e7180' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.6rem center;
+      transition: border-color 0.2s;
+    }
+
+    .flt:focus {
+      border-color: var(--accent-dim);
+    }
+
+    .toolbar-right {
+      margin-left: auto;
+    }
+
+    .export-btn {
+      padding: 0.5rem 0.85rem;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .export-btn:hover {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    /* Table */
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      flex: 1;
+      opacity: 0;
+      animation: fadeUp 0.4s 0.18s forwards;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    th {
+      padding: 0.7rem 1rem;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.18s;
+    }
+
+    th:hover {
+      color: var(--text);
+    }
+
+    th.sorted {
+      color: var(--accent);
+    }
+
+    th .sort-icon {
+      display: inline-block;
+      margin-left: 0.3rem;
+      opacity: 0.5;
+      font-size: 0.6rem;
+    }
+
+    th.sorted .sort-icon {
+      opacity: 1;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--surface2);
+    }
+
+    tbody tr.row-selected {
+      background: var(--accent-bg);
+    }
+
+    td {
+      padding: 0.82rem 1rem;
+      font-size: 0.8rem;
+      vertical-align: middle;
+    }
+
+    .td-check {
+      width: 36px;
+    }
+
+    .td-check input[type=checkbox] {
+      accent-color: var(--accent);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .td-id {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .td-titulo strong {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      display: block;
+    }
+
+    .td-titulo span {
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .td-residente {
+      white-space: nowrap;
+    }
+
+    .residente-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .res-av {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: #0b0d13;
+      flex-shrink: 0;
+    }
+
+    .res-info strong {
+      font-size: 0.78rem;
+      display: block;
+      font-weight: 500;
+    }
+
+    .res-info span {
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .td-asignado {
+      white-space: nowrap;
+    }
+
+    .asign-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      color: var(--text);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.18rem 0.6rem;
+    }
+
+    .asign-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .unassigned-pill {
+      font-size: 0.72rem;
+      color: var(--muted2);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: color 0.18s;
+    }
+
+    .unassigned-pill:hover {
+      color: var(--accent);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.58rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .badge::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .badge-green {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .badge-yellow {
+      background: var(--yellow-bg);
+      color: var(--yellow);
+    }
+
+    .badge-red {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    .badge-blue {
+      background: var(--blue-bg);
+      color: var(--blue);
+    }
+
+    .badge-muted {
+      background: var(--surface2);
+      color: var(--muted);
+    }
+
+    .prio-bar {
+      display: inline-block;
+      width: 3px;
+      height: 28px;
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+
+    .td-actions {
+      text-align: right;
+    }
+
+    .action-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.18s;
+      margin-left: 0.25rem;
+    }
+
+    .action-btn:hover {
+      border-color: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .action-btn.danger:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* Bulk bar */
+    .bulk-bar {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 1rem;
+      background: var(--accent-bg);
+      border-bottom: 1px solid var(--accent-dim);
+    }
+
+    .bulk-bar.visible {
+      display: flex;
+    }
+
+    .bulk-bar span {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .bulk-btn {
+      padding: 0.35rem 0.75rem;
+      background: none;
+      border: 1px solid var(--accent-dim);
+      border-radius: 6px;
+      color: var(--accent);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .bulk-btn:hover {
+      background: var(--accent);
+      color: #0b0d13;
+    }
+
+    .bulk-btn.danger {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .bulk-btn.danger:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .pag-info {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .pag-btns {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .pag-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s;
+    }
+
+    .pag-btn:hover:not(:disabled) {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    .pag-btn.active {
+      background: var(--accent-bg);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .pag-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* ── RIGHT: detalle ── */
+    .col-detail {
+      width: 380px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.4s 0.25s forwards;
+    }
+
+    .detail-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .detail-empty {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .detail-empty svg {
+      margin: 0 auto 0.75rem;
+      display: block;
+      opacity: 0.25;
+    }
+
+    .detail-empty p {
+      font-size: 0.8rem;
+    }
+
+    .dcard-header {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dcard-id {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .dcard-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-top: 0.2rem;
+    }
+
+    .dcard-meta {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .dcard-body {
+      padding: 1.1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .info-cell {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.8rem;
+    }
+
+    .info-cell-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .info-cell-val {
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+
+    .section-title {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .desc-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* Asignación */
+    .assign-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .assign-select-wrap {
+      position: relative;
+    }
+
+    .assign-select-wrap select {
+      width: 100%;
+      padding: 0.6rem 2rem 0.6rem 0.85rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      transition: border-color 0.2s;
+    }
+
+    .assign-select-wrap select:focus {
+      border-color: var(--accent-dim);
+    }
+
+    .assign-select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--muted);
+      pointer-events: none;
+    }
+
+    .btn-assign {
+      width: 100%;
+      padding: 0.6rem;
+      background: var(--accent);
+      color: #0b0d13;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-assign:hover {
+      background: #d4b87a;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tl-item {
+      display: flex;
+      gap: 0.7rem;
+      padding-bottom: 1rem;
+      position: relative;
+    }
+
+    .tl-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .tl-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 22px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .tl-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.6rem;
+    }
+
+    .tl-body strong {
+      display: block;
+      font-size: 0.77rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .tl-body span {
+      font-size: 0.68rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .tl-body small {
+      font-size: 0.62rem;
+      color: var(--muted2);
+      display: block;
+      margin-top: 0.15rem;
+    }
+
+    /* Comentario */
+    .comment-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .comment-row input {
+      flex: 1;
+      padding: 0.55rem 0.8rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .comment-row input:focus {
+      border-color: var(--accent-dim);
+    }
+
+    .comment-row input::placeholder {
+      color: var(--muted2);
+    }
+
+    .send-btn {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: #0b0d13;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .send-btn:hover {
+      background: #d4b87a;
+    }
+
+    /* Status change */
+    .status-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .status-btn {
+      flex: 1;
+      padding: 0.45rem 0.3rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: center;
+    }
+
+    .status-btn:hover {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    .status-btn.s-active {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-bg);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.4
+      }
+    }
+
+    @media(max-width:1300px) {
+      .col-detail {
+        width: 320px;
+      }
+    }
+
+    @media(max-width:1100px) {
+      .col-detail {
+        display: none;
+      }
+    }
+
+    @media(max-width:768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b0d13" stroke-width="2">
+          <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
+        </svg>
+      </div>
+      <div class="logo-text"><strong>Residencia</strong><span>Panel Administrativo</span></div>
+    </div>
+    <div class="admin-badge">
+      <div class="dot"></div><span>Administrador activo</span>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar-sm">MA</div>
+      <div class="user-info"><strong>María Álvarez</strong><span>Administradora General</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">General</span>
+      <a class="nav-item" href="dashboard.html">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </svg>
+        Dashboard
+      </a>
+      <a class="nav-item active" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+          <rect x="9" y="3" width="6" height="4" rx="1" />
+        </svg>
+        Solicitudes <span class="nav-badge">7</span>
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+        Reservas <span class="nav-badge gold">3</span>
+      </a>
+      <span class="nav-section-label">Gestión</span>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        Residentes
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path
+            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+        </svg>
+        Personal
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        Comunicados
+      </a>
+      <span class="nav-section-label">Reportes</span>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+        Reportes & Métricas
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <line x1="12" y1="1" x2="12" y2="23" />
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+        Finanzas / Pagos
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <h1>Gestión de Solicitudes</h1>
+      <div class="topbar-right">
+        <button class="btn-primary" onclick="openNueva()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Nueva solicitud
+        </button>
+      </div>
+    </header>
+
+    <div class="page">
+
+      <!-- COL MAIN -->
+      <div class="col-main">
+
+        <!-- Tabs estado -->
+        <div class="kanban-tabs">
+          <button class="ktab active" data-tab="todas" onclick="setTab(this)">Todas <span class="ktab-count badge-muted"
+              style="background:var(--surface2);color:var(--muted)">18</span></button>
+          <button class="ktab" data-tab="sin asignar" onclick="setTab(this)">Sin asignar <span class="ktab-count"
+              style="background:var(--red-bg);color:var(--red)">3</span></button>
+          <button class="ktab" data-tab="pendiente" onclick="setTab(this)">Pendiente <span class="ktab-count"
+              style="background:var(--surface2);color:var(--muted)">4</span></button>
+          <button class="ktab" data-tab="en proceso" onclick="setTab(this)">En proceso <span class="ktab-count"
+              style="background:var(--yellow-bg);color:var(--yellow)">6</span></button>
+          <button class="ktab" data-tab="resuelto" onclick="setTab(this)">Resuelto <span class="ktab-count"
+              style="background:var(--green-bg);color:var(--green)">5</span></button>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <div class="search-wrap">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input type="text" id="searchInput" placeholder="Buscar solicitud…" oninput="applyFilters()" />
+          </div>
+          <select class="flt" id="tipoFlt" onchange="applyFilters()">
+            <option value="">Tipo</option>
+            <option>Mantenimiento</option>
+            <option>Queja</option>
+            <option>Reserva</option>
+            <option>Visita</option>
+            <option>Pago</option>
+            <option>Otro</option>
+          </select>
+          <select class="flt" id="prioFlt" onchange="applyFilters()">
+            <option value="">Prioridad</option>
+            <option>Alta</option>
+            <option>Media</option>
+            <option>Baja</option>
+          </select>
+          <select class="flt" id="personFlt" onchange="applyFilters()">
+            <option value="">Personal</option>
+            <option>Juan Pérez</option>
+            <option>Luis Gómez</option>
+            <option>Sin asignar</option>
+          </select>
+          <div class="toolbar-right">
+            <button class="export-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Exportar
+            </button>
+          </div>
+        </div>
+
+        <!-- Bulk bar -->
+        <div class="bulk-bar" id="bulkBar">
+          <span id="bulkCount">0 seleccionadas</span>
+          <button class="bulk-btn" onclick="bulkAssign()">Asignar a…</button>
+          <button class="bulk-btn" onclick="bulkStatus()">Cambiar estado</button>
+          <button class="bulk-btn danger" onclick="bulkClear()">Limpiar selección</button>
+        </div>
+
+        <!-- Table -->
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th class="td-check"><input type="checkbox" id="checkAll" onchange="toggleAll(this)" /></th>
+                <th onclick="sortBy('id')">Ticket <span class="sort-icon">↕</span></th>
+                <th onclick="sortBy('titulo')">Solicitud <span class="sort-icon">↕</span></th>
+                <th onclick="sortBy('residente')">Residente <span class="sort-icon">↕</span></th>
+                <th onclick="sortBy('tipo')">Tipo <span class="sort-icon">↕</span></th>
+                <th onclick="sortBy('prioridad')">Prioridad <span class="sort-icon">↕</span></th>
+                <th onclick="sortBy('estado')">Estado <span class="sort-icon">↕</span></th>
+                <th onclick="sortBy('asignado')">Asignado <span class="sort-icon">↕</span></th>
+                <th onclick="sortBy('fecha')">Fecha <span class="sort-icon">↕</span></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+          <div class="pagination">
+            <span class="pag-info" id="pagInfo">—</span>
+            <div class="pag-btns" id="pagBtns"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL DETAIL -->
+      <div class="col-detail">
+        <div class="detail-card" id="detailCard">
+          <div class="detail-empty">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+              <rect x="9" y="3" width="6" height="4" rx="1" />
+              <path d="M9 12h6M9 16h4" />
+            </svg>
+            <p>Selecciona una solicitud<br />para ver su detalle</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ── DATA ──
+    const avatarColors = ['#4a6fa5', '#6a4a9a', '#4a9a6e', '#9a6a4a', '#9a4a4a', '#4a8a9a'];
+    const personal = ['Juan Pérez', 'Luis Gómez', 'Carlos Torres', 'Sin asignar'];
+
+    const solicitudes = [
+      { id: 'SOL-2025-0052', titulo: 'Filtración techo baño', tipo: 'Mantenimiento', prioridad: 'alta', estado: 'sin asignar', residente: 'Laura Martínez', apto: '502-B', asignado: null, fecha: '2025-03-15', desc: 'Filtración del apartamento de arriba afecta el techo del baño principal.' },
+      { id: 'SOL-2025-0051', titulo: 'Ruido nocturno Apto 204', tipo: 'Queja', prioridad: 'media', estado: 'sin asignar', residente: 'Pedro Sánchez', apto: '310-A', asignado: null, fecha: '2025-03-15', desc: 'Vecino 204 genera ruido después de las 11 PM de forma constante.' },
+      { id: 'SOL-2025-0050', titulo: 'Puerta garaje dañada', tipo: 'Mantenimiento', prioridad: 'alta', estado: 'sin asignar', residente: 'Admin', apto: 'Zona común', asignado: null, fecha: '2025-03-15', desc: 'La puerta del garaje no cierra correctamente, quedó atascada.' },
+      { id: 'SOL-2025-0049', titulo: 'Grifo con fuga cocina', tipo: 'Mantenimiento', prioridad: 'alta', estado: 'en proceso', residente: 'Carlos Ramírez', apto: '301-A', asignado: 'Juan Pérez', fecha: '2025-03-14', desc: 'Grifo de la cocina tiene fuga constante. Ya hay daño en mueble.' },
+      { id: 'SOL-2025-0048', titulo: 'Cambio bombillo ascensor', tipo: 'Mantenimiento', prioridad: 'baja', estado: 'en proceso', residente: 'Admin', apto: 'Zona común', asignado: 'Luis Gómez', fecha: '2025-03-14', desc: 'Bombillo del ascensor de la Torre A fundido.' },
+      { id: 'SOL-2025-0047', titulo: 'Solicitud parqueadero', tipo: 'Visita', prioridad: 'baja', estado: 'pendiente', residente: 'Ana López', apto: '104-A', asignado: 'Carlos Torres', fecha: '2025-03-13', desc: 'Necesita autorizar ingreso de vehículo de familiar el fin de semana.' },
+      { id: 'SOL-2025-0046', titulo: 'Consulta cuota febrero', tipo: 'Pago', prioridad: 'baja', estado: 'pendiente', residente: 'Roberto Quiroga', apto: '210-A', asignado: null, fecha: '2025-03-12', desc: 'Consulta sobre recibo de cuota de febrero y posible error en el monto.' },
+      { id: 'SOL-2025-0045', titulo: 'Reserva salón comunal', tipo: 'Reserva', prioridad: 'media', estado: 'en proceso', residente: 'Sofia Herrera', apto: '405-B', asignado: 'Carlos Torres', fecha: '2025-03-12', desc: 'Reserva para evento familiar el 22 de marzo, 10am a 4pm.' },
+      { id: 'SOL-2025-0044', titulo: 'Plaga de insectos piso 2', tipo: 'Mantenimiento', prioridad: 'alta', estado: 'en proceso', residente: 'Diana Cruz', apto: '201-A', asignado: 'Juan Pérez', fecha: '2025-03-11', desc: 'Aparición de cucarachas en el pasillo del piso 2 Torre A.' },
+      { id: 'SOL-2025-0043', titulo: 'Fuga agua zona jardín', tipo: 'Mantenimiento', prioridad: 'media', estado: 'en proceso', residente: 'Admin', apto: 'Zona común', asignado: 'Luis Gómez', fecha: '2025-03-10', desc: 'Fuga de agua en la tubería del jardín principal.' },
+      { id: 'SOL-2025-0042', titulo: 'Cambio cerradura Apto 312', tipo: 'Mantenimiento', prioridad: 'media', estado: 'pendiente', residente: 'Jorge Medina', apto: '312-B', asignado: null, fecha: '2025-03-09', desc: 'La cerradura del apartamento 312 no funciona bien.' },
+      { id: 'SOL-2025-0041', titulo: 'Iluminación cancha nocturna', tipo: 'Mantenimiento', prioridad: 'media', estado: 'pendiente', residente: 'Admin', apto: 'Zona común', asignado: null, fecha: '2025-03-08', desc: 'Las luces de la cancha no encienden en las noches.' },
+      { id: 'SOL-2025-0040', titulo: 'Daño en fachada Torre B', tipo: 'Mantenimiento', prioridad: 'alta', estado: 'en proceso', residente: 'Admin', apto: 'Zona común', asignado: 'Juan Pérez', fecha: '2025-03-07', desc: 'Daño visible en la fachada del piso 8 Torre B. Posible riesgo.' },
+      { id: 'SOL-2025-0039', titulo: 'Queja mascota sin correa', tipo: 'Queja', prioridad: 'baja', estado: 'resuelto', residente: 'Camila Vargas', apto: '115-A', asignado: 'Carlos Torres', fecha: '2025-03-06', desc: 'Vecino lleva perro sin correa por zonas comunes.' },
+      { id: 'SOL-2025-0038', titulo: 'Cambio bombillo pasillo', tipo: 'Mantenimiento', prioridad: 'baja', estado: 'resuelto', residente: 'Carlos Ramírez', apto: '301-A', asignado: 'Juan Pérez', fecha: '2025-03-06', desc: 'Bombillo del pasillo piso 3 Torre A fundido.' },
+      { id: 'SOL-2025-0037', titulo: 'Daño en puerta de acceso', tipo: 'Mantenimiento', prioridad: 'media', estado: 'resuelto', residente: 'Admin', apto: 'Lobby', asignado: 'Luis Gómez', fecha: '2025-03-05', desc: 'Puerta principal de acceso no cerraba correctamente.' },
+      { id: 'SOL-2025-0036', titulo: 'Filtración en salón comunal', tipo: 'Mantenimiento', prioridad: 'alta', estado: 'resuelto', residente: 'Admin', apto: 'Zona común', asignado: 'Juan Pérez', fecha: '2025-03-04', desc: 'Filtración de agua en el techo del salón comunal.' },
+      { id: 'SOL-2025-0035', titulo: 'Ruido obras vecino', tipo: 'Queja', prioridad: 'media', estado: 'resuelto', residente: 'Andrés Gómez', apto: '408-B', asignado: 'Carlos Torres', fecha: '2025-03-03', desc: 'Vecino realiza obras sin permiso en horarios no permitidos.' },
+    ];
+
+    const estadoBadge = {
+      'sin asignar': '<span class="badge badge-red">Sin asignar</span>',
+      'pendiente': '<span class="badge badge-muted">Pendiente</span>',
+      'en proceso': '<span class="badge badge-yellow">En proceso</span>',
+      'resuelto': '<span class="badge badge-green">Resuelto</span>',
+    };
+    const prioColor = { alta: 'var(--red)', media: 'var(--yellow)', baja: 'var(--muted2)' };
+    const prioLabel = {
+      alta: '<span class="badge badge-red">Alta</span>',
+      media: '<span class="badge badge-yellow">Media</span>',
+      baja: '<span class="badge badge-green">Baja</span>',
+    };
+
+    let activeTab = 'todas';
+    let sortField = 'fecha';
+    let sortDir = -1;
+    let currentPage = 1;
+    const PER_PAGE = 8;
+    let selectedIds = new Set();
+    let activeId = null;
+
+    // ── FILTER + SORT ──
+    function getFiltered() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const tipo = document.getElementById('tipoFlt').value;
+      const prio = document.getElementById('prioFlt').value.toLowerCase();
+      const pers = document.getElementById('personFlt').value;
+
+      return solicitudes
+        .filter(s => {
+          const matchTab = activeTab === 'todas' || s.estado === activeTab;
+          const matchQ = !q || s.titulo.toLowerCase().includes(q) || s.id.toLowerCase().includes(q) || s.residente.toLowerCase().includes(q);
+          const matchTipo = !tipo || s.tipo === tipo;
+          const matchPrio = !prio || s.prioridad === prio;
+          const matchPers = !pers || (pers === 'Sin asignar' ? !s.asignado : s.asignado === pers);
+          return matchTab && matchQ && matchTipo && matchPrio && matchPers;
+        })
+        .sort((a, b) => {
+          let va = a[sortField] || '', vb = b[sortField] || '';
+          if (sortField === 'prioridad') { const o = { alta: 0, media: 1, baja: 2 }; va = o[va]; vb = o[vb]; }
+          return va < vb ? -sortDir : va > vb ? sortDir : 0;
+        });
+    }
+
+    function applyFilters() { currentPage = 1; render(); }
+
+    function setTab(btn) {
+      document.querySelectorAll('.ktab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTab = btn.dataset.tab;
+      applyFilters();
+    }
+
+    function sortBy(field) {
+      if (sortField === field) sortDir *= -1;
+      else { sortField = field; sortDir = 1; }
+      document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
+      render();
+    }
+
+    // ── RENDER ──
+    function render() {
+      const data = getFiltered();
+      const start = (currentPage - 1) * PER_PAGE;
+      const page = data.slice(start, start + PER_PAGE);
+
+      const tbody = document.getElementById('tableBody');
+
+      if (!page.length) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:2.5rem;color:var(--muted);font-size:0.82rem">No se encontraron solicitudes</td></tr>`;
+      } else {
+        tbody.innerHTML = page.map(s => {
+          const initials = s.residente.split(' ').map(w => w[0]).join('').substring(0, 2);
+          const color = avatarColors[s.residente.charCodeAt(0) % avatarColors.length];
+          const isChecked = selectedIds.has(s.id);
+          const isActive = s.id === activeId;
+          return `
+        <tr class="${isActive ? 'row-selected' : ''}" onclick="openDetail('${s.id}')">
+          <td class="td-check" onclick="event.stopPropagation()">
+            <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleRow('${s.id}',this)"/>
+          </td>
+          <td class="td-id">${s.id}</td>
+          <td class="td-titulo">
+            <strong>${s.titulo}</strong>
+            <span>${s.apto}</span>
+          </td>
+          <td class="td-residente">
+            <div class="residente-cell">
+              <div class="res-av" style="background:${color}">${initials}</div>
+              <div class="res-info">
+                <strong>${s.residente}</strong>
+                <span>${s.apto}</span>
+              </div>
+            </div>
+          </td>
+          <td style="font-size:0.75rem;color:var(--muted)">${s.tipo}</td>
+          <td>${prioLabel[s.prioridad]}</td>
+          <td>${estadoBadge[s.estado]}</td>
+          <td class="td-asignado">
+            ${s.asignado
+              ? `<span class="asign-pill"><span class="asign-dot"></span>${s.asignado}</span>`
+              : `<span class="unassigned-pill" onclick="event.stopPropagation();quickAssign('${s.id}',this)">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                  Asignar
+                </span>`
+            }
+          </td>
+          <td style="font-size:0.72rem;color:var(--muted)">${fmtDate(s.fecha)}</td>
+          <td class="td-actions" onclick="event.stopPropagation()">
+            <button class="action-btn" title="Ver" onclick="openDetail('${s.id}')">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <button class="action-btn danger" title="Cerrar solicitud">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </td>
+        </tr>`;
+        }).join('');
+      }
+
+      renderPagination(data.length);
+      updateBulkBar();
+    }
+
+    function fmtDate(d) {
+      return new Date(d + 'T12:00').toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function renderPagination(total) {
+      const pages = Math.ceil(total / PER_PAGE);
+      const s = (currentPage - 1) * PER_PAGE + 1, e = Math.min(currentPage * PER_PAGE, total);
+      document.getElementById('pagInfo').textContent = total ? `Mostrando ${s}–${e} de ${total}` : 'Sin resultados';
+      let html = `<button class="pag-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>`;
+      for (let i = 1; i <= pages; i++) html += `<button class="pag-btn ${i === currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+      html += `<button class="pag-btn" onclick="goPage(${currentPage + 1})" ${currentPage >= pages || !pages ? 'disabled' : ''}>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>`;
+      document.getElementById('pagBtns').innerHTML = html;
+    }
+
+    function goPage(p) {
+      const pages = Math.ceil(getFiltered().length / PER_PAGE);
+      if (p < 1 || p > pages) return;
+      currentPage = p;
+      render();
+    }
+
+    // ── CHECKBOXES ──
+    function toggleRow(id, cb) {
+      if (cb.checked) selectedIds.add(id);
+      else selectedIds.delete(id);
+      updateBulkBar();
+    }
+
+    function toggleAll(cb) {
+      const data = getFiltered().slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+      data.forEach(s => { if (cb.checked) selectedIds.add(s.id); else selectedIds.delete(s.id); });
+      render();
+    }
+
+    function updateBulkBar() {
+      const bar = document.getElementById('bulkBar');
+      const n = selectedIds.size;
+      if (n > 0) { bar.classList.add('visible'); document.getElementById('bulkCount').textContent = `${n} seleccionada${n > 1 ? 's' : ''}`; }
+      else bar.classList.remove('visible');
+    }
+
+    function bulkClear() { selectedIds.clear(); document.getElementById('checkAll').checked = false; render(); }
+    function bulkAssign() { const p = personal[0]; selectedIds.forEach(id => { const s = solicitudes.find(x => x.id === id); if (s) { s.asignado = p; s.estado = 'en proceso'; } }); bulkClear(); if (activeId) openDetail(activeId); toast(`${selectedIds.size} solicitudes asignadas a ${p}`); }
+    function bulkStatus() { selectedIds.forEach(id => { const s = solicitudes.find(x => x.id === id); if (s && s.estado !== 'resuelto') s.estado = 'en proceso'; }); bulkClear(); }
+
+    // ── QUICK ASSIGN ──
+    function quickAssign(id, el) {
+      const s = solicitudes.find(x => x.id === id);
+      if (!s) return;
+      const available = personal.filter(p => p !== 'Sin asignar');
+      const chosen = available[0];
+      s.asignado = chosen;
+      if (s.estado === 'sin asignar') s.estado = 'pendiente';
+      render();
+      if (activeId === id) openDetail(id);
+      toast(`Asignado a ${chosen}`);
+    }
+
+    // ── DETAIL PANEL ──
+    function openDetail(id) {
+      activeId = id;
+      render();
+      const s = solicitudes.find(x => x.id === id);
+      if (!s) return;
+
+      const initials = s.residente.split(' ').map(w => w[0]).join('').substring(0, 2);
+      const color = avatarColors[s.residente.charCodeAt(0) % avatarColors.length];
+
+      const tlItems = [
+        { bg: 'var(--green-bg)', stroke: 'var(--green)', icon: '✓', title: 'Solicitud recibida', desc: 'Registrada en el sistema.', time: fmtDate(s.fecha) },
+        ...(s.asignado ? [{ bg: 'var(--blue-bg)', stroke: 'var(--blue)', icon: '👤', title: `Asignada a ${s.asignado}`, desc: 'Tarea asignada para atención.', time: 'Reciente' }] : []),
+        ...(s.estado === 'en proceso' ? [{ bg: 'var(--yellow-bg)', stroke: 'var(--yellow)', icon: '⚙', title: 'En proceso', desc: 'El técnico está atendiendo la solicitud.', time: 'En curso' }] : []),
+        ...(s.estado === 'resuelto' ? [{ bg: 'var(--green-bg)', stroke: 'var(--green)', icon: '✓', title: 'Resuelta', desc: 'Solicitud cerrada exitosamente.', time: 'Completado' }] : []),
+      ];
+
+      const tlHtml = tlItems.map(t => `
+      <div class="tl-item">
+        <div class="tl-dot" style="background:${t.bg};border:1px solid ${t.stroke}">${t.icon}</div>
+        <div class="tl-body">
+          <strong>${t.title}</strong>
+          <span>${t.desc}</span>
+          <small>${t.time}</small>
+        </div>
+      </div>`).join('');
+
+      const persOptions = personal.map(p =>
+        `<option ${s.asignado === p ? 'selected' : ''}>${p}</option>`
+      ).join('');
+
+      document.getElementById('detailCard').innerHTML = `
+      <div class="dcard-header">
+        <div class="dcard-id">${s.id}</div>
+        <div class="dcard-title">${s.titulo}</div>
+        <div class="dcard-meta">
+          ${estadoBadge[s.estado]}
+          ${prioLabel[s.prioridad]}
+        </div>
+      </div>
+      <div class="dcard-body">
+
+        <div class="info-grid">
+          <div class="info-cell">
+            <div class="info-cell-label">Residente</div>
+            <div class="info-cell-val" style="display:flex;align-items:center;gap:0.4rem">
+              <div class="res-av" style="background:${color};width:22px;height:22px;font-size:0.55rem">${initials}</div>
+              <span>${s.residente}</span>
+            </div>
+          </div>
+          <div class="info-cell">
+            <div class="info-cell-label">Unidad</div>
+            <div class="info-cell-val">${s.apto}</div>
+          </div>
+          <div class="info-cell">
+            <div class="info-cell-label">Tipo</div>
+            <div class="info-cell-val">${s.tipo}</div>
+          </div>
+          <div class="info-cell">
+            <div class="info-cell-label">Fecha</div>
+            <div class="info-cell-val">${fmtDate(s.fecha)}</div>
+          </div>
+        </div>
+
+        <div>
+          <p class="section-title">Descripción</p>
+          <div class="desc-box">${s.desc}</div>
+        </div>
+
+        <div class="assign-section">
+          <p class="section-title">Asignación de personal</p>
+          <div class="assign-select-wrap">
+            <select id="assignSelect">${persOptions}</select>
+          </div>
+          <button class="btn-assign" onclick="saveAssign('${s.id}')">Confirmar asignación</button>
+        </div>
+
+        <div>
+          <p class="section-title">Cambiar estado</p>
+          <div class="status-row">
+            <button class="status-btn ${s.estado === 'pendiente' ? 's-active' : ''}" onclick="changeStatus('${s.id}','pendiente')">Pendiente</button>
+            <button class="status-btn ${s.estado === 'en proceso' ? 's-active' : ''}" onclick="changeStatus('${s.id}','en proceso')">En proceso</button>
+            <button class="status-btn ${s.estado === 'resuelto' ? 's-active' : ''}" onclick="changeStatus('${s.id}','resuelto')">Resuelto</button>
+          </div>
+        </div>
+
+        <div>
+          <p class="section-title">Historial</p>
+          <div class="timeline">${tlHtml}</div>
+        </div>
+
+        <div>
+          <p class="section-title">Comentario interno</p>
+          <div class="comment-row">
+            <input type="text" placeholder="Nota para el equipo…" id="commentInput"/>
+            <button class="send-btn" onclick="sendComment('${s.id}')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>`;
+    }
+
+    function saveAssign(id) {
+      const s = solicitudes.find(x => x.id === id);
+      const sel = document.getElementById('assignSelect');
+      if (!s || !sel) return;
+      s.asignado = sel.value === 'Sin asignar' ? null : sel.value;
+      if (s.asignado && s.estado === 'sin asignar') s.estado = 'pendiente';
+      render();
+      openDetail(id);
+      toast(`Asignado a ${sel.value}`);
+    }
+
+    function changeStatus(id, newStatus) {
+      const s = solicitudes.find(x => x.id === id);
+      if (!s) return;
+      s.estado = newStatus;
+      render();
+      openDetail(id);
+      toast(`Estado actualizado: ${newStatus}`);
+    }
+
+    function sendComment(id) {
+      const inp = document.getElementById('commentInput');
+      if (!inp || !inp.value.trim()) return;
+      inp.value = '';
+      toast('Comentario guardado');
+    }
+
+    // ── TOAST ──
+    function toast(msg) {
+      let t = document.getElementById('globalToast');
+      if (!t) { t = document.createElement('div'); t.id = 'globalToast'; t.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface);border:1px solid var(--green);border-radius:10px;padding:0.7rem 1.1rem;font-size:0.78rem;color:var(--text);z-index:500;transition:all 0.3s;opacity:0;transform:translateY(10px)'; document.body.appendChild(t); }
+      t.textContent = '✅ ' + msg;
+      t.style.opacity = '1'; t.style.transform = 'translateY(0)';
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(10px)'; }, 2500);
+    }
+
+    function openNueva() { window.location.href = '../../views/residente/nueva-solicitud.html'; }
+
+    // ── INIT ──
+    render();
+  </script>
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/auth.js"></script>
+  <script>
+    Auth.proteger('ADMIN');
+
+    // ── Estado local ──
+    let solicitudesAdmin = [];
+    let adminPage = 0;
+    const ADMIN_PAGE_SIZE = 8;
+
+    // ── Cargar solicitudes ──
+    async function cargarSolicitudes(page = 0) {
+      try {
+        const data = await SolicitudAPI.listarTodas(page);
+        solicitudesAdmin = data.content || [];
+        renderTablaAdmin(solicitudesAdmin);
+        actualizarContadores();
+      } catch (error) {
+        console.error('Error cargando solicitudes:', error);
+      }
+    }
+
+    // ── Actualizar contadores en pills ──
+    async function actualizarContadores() {
+      try {
+        const sinAsignar = await SolicitudAPI.sinAsignar();
+        // Actualizar badge del nav si existe
+        const badge = document.querySelector('.nav-item.active .nav-badge');
+        if (badge) badge.textContent = solicitudesAdmin.length;
+      } catch (e) { }
+    }
+
+    // ── Render tabla ──
+    function renderTablaAdmin(data) {
+      const tbody = document.getElementById('tableBody');
+      if (!tbody) return;
+
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--muted);font-size:0.8rem">No hay solicitudes</td></tr>`;
+      } else {
+        const estadoBadge = {
+          'EN_PROCESO': '<span class="badge badge-yellow">En proceso</span>',
+          'PENDIENTE': '<span class="badge badge-muted">Pendiente</span>',
+          'RESUELTO': '<span class="badge badge-green">Resuelto</span>',
+          'SIN_ASIGNAR': '<span class="badge badge-red">Sin asignar</span>',
+          'CANCELADO': '<span class="badge badge-muted">Cancelado</span>',
+        };
+        const prioBadge = {
+          'ALTA': '<span class="badge badge-red">Alta</span>',
+          'MEDIA': '<span class="badge badge-yellow">Media</span>',
+          'BAJA': '<span class="badge badge-green">Baja</span>',
+        };
+
+        tbody.innerHTML = data.map(s => `
+      <tr>
+        <td style="font-family:'Cormorant Garamond',serif;color:var(--accent);font-weight:600">${s.numero || '—'}</td>
+        <td><strong style="display:block;font-size:0.83rem;font-weight:500">${s.titulo}</strong>
+            <span style="font-size:0.7rem;color:var(--muted)">${s.residenteNombre || '—'} · ${s.ubicacion || '—'}</span></td>
+        <td style="font-size:0.75rem;color:var(--muted)">${s.tipo}</td>
+        <td>${estadoBadge[s.estado] || s.estado}</td>
+        <td>${prioBadge[s.prioridad] || s.prioridad}</td>
+        <td style="font-size:0.75rem;color:var(--muted)">${s.asignadoNombre || '<span style="color:var(--muted2)">Sin asignar</span>'}</td>
+        <td style="text-align:right">
+          ${s.estado === 'SIN_ASIGNAR' || s.estado === 'PENDIENTE'
+            ? `<button onclick="cambiarEstado(${s.id},'EN_PROCESO')" style="padding:0.3rem 0.75rem;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.7rem;cursor:pointer">Iniciar →</button>`
+            : s.estado === 'EN_PROCESO'
+              ? `<button onclick="cambiarEstado(${s.id},'RESUELTO')" style="padding:0.3rem 0.75rem;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.7rem;cursor:pointer">Resolver ✓</button>`
+              : `<span style="font-size:0.7rem;color:var(--muted2)">${s.estado}</span>`
+          }
+        </td>
+      </tr>`).join('');
+      }
+
+      // ── Actualizar paginación con datos reales ──
+      const total = data.length;
+      document.getElementById('pagInfo').textContent =
+        total ? `Mostrando 1–${total} de ${total}` : 'Sin resultados';
+      document.getElementById('pagBtns').innerHTML = '';
+    }
+
+    // ── Asignar solicitud ──
+    async function asignarSolicitud(id) {
+      // Por ahora asignar al primer usuario de portería/personal disponible
+      // En producción abriría un modal de selección
+      const nombre = prompt('Nombre del personal a asignar (o deja vacío para cancelar):');
+      if (!nombre) return;
+
+      try {
+        // Buscar el usuario por nombre — simplificado
+        // En producción usaría un select con la lista de personal
+        await api.patch(`/solicitudes/${id}/estado`, { estado: 'EN_PROCESO' });
+        showToastAdmin('Solicitud actualizada', 'Estado cambiado a En proceso', 'var(--yellow-bg)');
+        cargarSolicitudes(adminPage);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // ── Cambiar estado ──
+    async function cambiarEstado(id, estadoActual) {
+      const estados = ['PENDIENTE', 'EN_PROCESO', 'RESUELTO'];
+      const siguientes = { 'PENDIENTE': 'EN_PROCESO', 'EN_PROCESO': 'RESUELTO', 'RESUELTO': 'RESUELTO' };
+      const nuevo = siguientes[estadoActual] || 'EN_PROCESO';
+
+      try {
+        await SolicitudAPI.cambiarEstado(id, nuevo);
+        showToastAdmin('Estado actualizado', `→ ${nuevo}`, 'var(--green-bg)');
+        cargarSolicitudes(adminPage);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // ── Toast simple ──
+    function showToastAdmin(title, desc, bg) {
+      const t = document.createElement('div');
+      t.style.cssText = `position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface);border:1px solid ${bg.replace('var(', '').replace(')', '')};border-radius:10px;padding:0.75rem 1.1rem;font-size:0.8rem;color:var(--text);z-index:500;transition:all 0.3s;opacity:0;transform:translateY(10px)`;
+      t.innerHTML = `<strong>${title}</strong><br><span style="color:var(--muted);font-size:0.72rem">${desc}</span>`;
+      document.body.appendChild(t);
+      requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'translateY(0)'; });
+      setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 2500);
+    }
+
+    // ── Logout ──
+    document.querySelector('.btn-logout').onclick = () => Auth.logout();
+
+    // ── INIT ──
+    cargarSolicitudes(adminPage);
+  </script>
+</body>
+
+</html>

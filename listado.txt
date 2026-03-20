@@ -1,0 +1,533 @@
+ El volumen de la unidad D no tiene etiqueta.
+ El n£mero de serie del volumen es: 5256-81BB
+
+ Directorio de D:\gitProyectos\hernan\ph-system
+
+17/03/2026  06:09 p.ÿm.    <DIR>          .
+17/03/2026  06:09 p.ÿm.    <DIR>          ..
+16/03/2026  01:44 p.ÿm.    <DIR>          backend
+16/03/2026  12:46 p.ÿm.    <DIR>          frontend
+17/03/2026  06:09 p.ÿm.                 0 listado.txt
+16/03/2026  04:46 p.ÿm.               122 param.txt
+               2 archivos            122 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  03:54 p.ÿm.    <DIR>          propiedad-residencia
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia
+
+16/03/2026  03:54 p.ÿm.    <DIR>          .
+16/03/2026  03:54 p.ÿm.    <DIR>          ..
+16/03/2026  01:44 p.ÿm.                38 .gitattributes
+16/03/2026  01:44 p.ÿm.               394 .gitignore
+16/03/2026  04:16 p.ÿm.    <DIR>          .idea
+16/03/2026  01:44 p.ÿm.    <DIR>          .mvn
+16/03/2026  01:44 p.ÿm.             2,473 HELP.md
+16/03/2026  01:44 p.ÿm.            11,790 mvnw
+16/03/2026  01:44 p.ÿm.             8,292 mvnw.cmd
+16/03/2026  01:57 p.ÿm.             6,676 pom.xml
+16/03/2026  01:44 p.ÿm.    <DIR>          src
+16/03/2026  04:14 p.ÿm.    <DIR>          target
+               6 archivos         29,663 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\.idea
+
+16/03/2026  04:16 p.ÿm.    <DIR>          .
+16/03/2026  04:16 p.ÿm.    <DIR>          ..
+16/03/2026  01:48 p.ÿm.               238 .gitignore
+16/03/2026  02:02 p.ÿm.             1,265 compiler.xml
+16/03/2026  01:49 p.ÿm.               191 encodings.xml
+16/03/2026  01:49 p.ÿm.               858 jarRepositories.xml
+16/03/2026  01:48 p.ÿm.               478 misc.xml
+16/03/2026  04:16 p.ÿm.             3,484 workspace.xml
+               6 archivos          6,514 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\.mvn
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  01:44 p.ÿm.    <DIR>          wrapper
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\.mvn\wrapper
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  01:44 p.ÿm.               168 maven-wrapper.properties
+               1 archivos            168 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  01:44 p.ÿm.    <DIR>          main
+16/03/2026  01:44 p.ÿm.    <DIR>          test
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  01:50 p.ÿm.    <DIR>          java
+16/03/2026  04:40 p.ÿm.    <DIR>          resources
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java
+
+16/03/2026  01:50 p.ÿm.    <DIR>          .
+16/03/2026  01:50 p.ÿm.    <DIR>          ..
+16/03/2026  01:51 p.ÿm.    <DIR>          com
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com
+
+16/03/2026  01:51 p.ÿm.    <DIR>          .
+16/03/2026  01:51 p.ÿm.    <DIR>          ..
+17/03/2026  05:48 p.ÿm.    <DIR>          residencial
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com\residencial
+
+17/03/2026  05:48 p.ÿm.    <DIR>          .
+17/03/2026  05:48 p.ÿm.    <DIR>          ..
+16/03/2026  04:24 p.ÿm.               294 Application.java
+17/03/2026  05:55 p.ÿm.    <DIR>          config
+17/03/2026  05:55 p.ÿm.    <DIR>          controller
+16/03/2026  02:02 p.ÿm.    <DIR>          dto
+16/03/2026  03:56 p.ÿm.    <DIR>          model
+16/03/2026  03:46 p.ÿm.    <DIR>          repository
+16/03/2026  04:12 p.ÿm.    <DIR>          security
+16/03/2026  04:21 p.ÿm.    <DIR>          service
+               1 archivos            294 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com\residencial\config
+
+17/03/2026  05:55 p.ÿm.    <DIR>          .
+17/03/2026  05:55 p.ÿm.    <DIR>          ..
+17/03/2026  05:55 p.ÿm.             1,291 SwaggerConfig.java
+               1 archivos          1,291 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com\residencial\controller
+
+17/03/2026  05:55 p.ÿm.    <DIR>          .
+17/03/2026  05:55 p.ÿm.    <DIR>          ..
+17/03/2026  05:55 p.ÿm.             1,344 AuthController.java
+17/03/2026  05:53 p.ÿm.             3,931 SolicitudController.java
+               2 archivos          5,275 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com\residencial\dto
+
+16/03/2026  02:02 p.ÿm.    <DIR>          .
+16/03/2026  02:02 p.ÿm.    <DIR>          ..
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com\residencial\model
+
+16/03/2026  03:56 p.ÿm.    <DIR>          .
+16/03/2026  03:56 p.ÿm.    <DIR>          ..
+16/03/2026  03:56 p.ÿm.             1,032 ComentarioSolicitud.java
+16/03/2026  03:56 p.ÿm.             1,143 RegistroAcceso.java
+16/03/2026  03:56 p.ÿm.             2,823 Reserva.java
+16/03/2026  01:55 p.ÿm.             2,634 Solicitud.java
+16/03/2026  01:55 p.ÿm.             1,698 Unidad.java
+16/03/2026  01:55 p.ÿm.             1,426 Usuario.java
+               6 archivos         10,756 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com\residencial\repository
+
+16/03/2026  03:46 p.ÿm.    <DIR>          .
+16/03/2026  03:46 p.ÿm.    <DIR>          ..
+16/03/2026  03:46 p.ÿm.             1,268 ReservaRepository.java
+16/03/2026  03:45 p.ÿm.             1,432 SolicitudRepository.java
+16/03/2026  03:45 p.ÿm.               527 UnidadRepository.java
+16/03/2026  03:45 p.ÿm.               409 UsuarioRepository.java
+               4 archivos          3,636 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com\residencial\security
+
+16/03/2026  04:12 p.ÿm.    <DIR>          .
+16/03/2026  04:12 p.ÿm.    <DIR>          ..
+16/03/2026  03:48 p.ÿm.             2,009 JwtAuthFilter.java
+16/03/2026  03:46 p.ÿm.             1,620 JwtService.java
+16/03/2026  04:12 p.ÿm.             4,302 SecurityConfig.java
+16/03/2026  03:47 p.ÿm.             1,176 UserDetailsServiceImpl.java
+               4 archivos          9,107 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\java\com\residencial\service
+
+16/03/2026  04:21 p.ÿm.    <DIR>          .
+16/03/2026  04:21 p.ÿm.    <DIR>          ..
+16/03/2026  04:21 p.ÿm.             1,937 AuthService.java
+16/03/2026  03:47 p.ÿm.             3,456 SolicitudService.java
+               2 archivos          5,393 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\resources
+
+16/03/2026  04:40 p.ÿm.    <DIR>          .
+16/03/2026  04:40 p.ÿm.    <DIR>          ..
+16/03/2026  04:40 p.ÿm.             1,727 application.properties
+16/03/2026  01:44 p.ÿm.    <DIR>          db
+16/03/2026  06:43 p.ÿm.    <DIR>          static
+16/03/2026  06:43 p.ÿm.    <DIR>          templates
+               1 archivos          1,727 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\resources\db
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  01:46 p.ÿm.    <DIR>          migration
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\resources\db\migration
+
+16/03/2026  01:46 p.ÿm.    <DIR>          .
+16/03/2026  01:46 p.ÿm.    <DIR>          ..
+16/03/2026  01:41 p.ÿm.             9,523 V1__esquema_inicial.sql
+               1 archivos          9,523 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\resources\static
+
+16/03/2026  06:43 p.ÿm.    <DIR>          .
+16/03/2026  06:43 p.ÿm.    <DIR>          ..
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\main\resources\templates
+
+16/03/2026  06:43 p.ÿm.    <DIR>          .
+16/03/2026  06:43 p.ÿm.    <DIR>          ..
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\test
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  01:44 p.ÿm.    <DIR>          java
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\test\java
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  01:44 p.ÿm.    <DIR>          propiedad_residencia
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\src\test\java\propiedad_residencia
+
+16/03/2026  01:44 p.ÿm.    <DIR>          .
+16/03/2026  01:44 p.ÿm.    <DIR>          ..
+16/03/2026  01:44 p.ÿm.               206 ApplicationTests.java
+               1 archivos            206 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+16/03/2026  04:40 p.ÿm.    <DIR>          classes
+16/03/2026  03:54 p.ÿm.    <DIR>          generated-sources
+16/03/2026  04:14 p.ÿm.    <DIR>          generated-test-sources
+16/03/2026  04:14 p.ÿm.    <DIR>          test-classes
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes
+
+16/03/2026  04:40 p.ÿm.    <DIR>          .
+16/03/2026  04:40 p.ÿm.    <DIR>          ..
+16/03/2026  04:40 p.ÿm.             1,727 application.properties
+16/03/2026  04:14 p.ÿm.    <DIR>          com
+16/03/2026  04:38 p.ÿm.    <DIR>          db
+               1 archivos          1,727 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\com
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+17/03/2026  05:56 p.ÿm.    <DIR>          residencial
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\com\residencial
+
+17/03/2026  05:56 p.ÿm.    <DIR>          .
+17/03/2026  05:56 p.ÿm.    <DIR>          ..
+16/03/2026  04:24 p.ÿm.               719 Application.class
+17/03/2026  05:56 p.ÿm.    <DIR>          config
+17/03/2026  05:56 p.ÿm.    <DIR>          controller
+16/03/2026  04:14 p.ÿm.    <DIR>          model
+16/03/2026  04:14 p.ÿm.    <DIR>          repository
+16/03/2026  04:14 p.ÿm.    <DIR>          security
+16/03/2026  04:21 p.ÿm.    <DIR>          service
+               1 archivos            719 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\com\residencial\config
+
+17/03/2026  05:56 p.ÿm.    <DIR>          .
+17/03/2026  05:56 p.ÿm.    <DIR>          ..
+17/03/2026  05:56 p.ÿm.             2,398 SwaggerConfig.class
+               1 archivos          2,398 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\com\residencial\controller
+
+17/03/2026  05:56 p.ÿm.    <DIR>          .
+17/03/2026  05:56 p.ÿm.    <DIR>          ..
+17/03/2026  05:56 p.ÿm.             3,018 AuthController.class
+17/03/2026  05:53 p.ÿm.             6,522 SolicitudController.class
+               2 archivos          9,540 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\com\residencial\model
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+16/03/2026  04:14 p.ÿm.             2,798 ComentarioSolicitud$ComentarioSolicitudBuilder.class
+16/03/2026  04:14 p.ÿm.             3,054 ComentarioSolicitud.class
+16/03/2026  04:14 p.ÿm.             3,741 RegistroAcceso$RegistroAccesoBuilder.class
+16/03/2026  04:14 p.ÿm.             1,439 RegistroAcceso$TipoAcceso.class
+16/03/2026  04:14 p.ÿm.             4,388 RegistroAcceso.class
+16/03/2026  04:14 p.ÿm.             1,526 Reserva$EspacioComun.class
+16/03/2026  04:14 p.ÿm.             1,361 Reserva$EstadoReserva.class
+16/03/2026  04:14 p.ÿm.             4,354 Reserva$ReservaBuilder.class
+16/03/2026  04:14 p.ÿm.             5,279 Reserva.class
+16/03/2026  04:14 p.ÿm.             1,499 Solicitud$EstadoSolicitud.class
+16/03/2026  04:14 p.ÿm.             1,337 Solicitud$Prioridad.class
+16/03/2026  04:14 p.ÿm.             6,299 Solicitud$SolicitudBuilder.class
+16/03/2026  04:14 p.ÿm.             1,521 Solicitud$TipoSolicitud.class
+16/03/2026  04:14 p.ÿm.             8,675 Solicitud.class
+16/03/2026  04:14 p.ÿm.             1,331 Unidad$EstadoCuota.class
+16/03/2026  04:14 p.ÿm.             1,318 Unidad$TipoPropietario.class
+16/03/2026  04:14 p.ÿm.             4,545 Unidad$UnidadBuilder.class
+16/03/2026  04:14 p.ÿm.             6,473 Unidad.class
+16/03/2026  04:14 p.ÿm.             1,296 Usuario$Rol.class
+16/03/2026  04:14 p.ÿm.             3,547 Usuario$UsuarioBuilder.class
+16/03/2026  04:14 p.ÿm.             4,516 Usuario.class
+              21 archivos         70,297 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\com\residencial\repository
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+16/03/2026  04:14 p.ÿm.             1,642 ReservaRepository.class
+16/03/2026  04:14 p.ÿm.             2,223 SolicitudRepository.class
+16/03/2026  04:14 p.ÿm.             1,170 UnidadRepository.class
+16/03/2026  04:14 p.ÿm.               680 UsuarioRepository.class
+               4 archivos          5,715 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\com\residencial\security
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+16/03/2026  04:14 p.ÿm.             3,356 JwtAuthFilter.class
+16/03/2026  04:14 p.ÿm.             3,235 JwtService.class
+16/03/2026  04:14 p.ÿm.            11,802 SecurityConfig.class
+16/03/2026  04:14 p.ÿm.             3,173 UserDetailsServiceImpl.class
+               4 archivos         21,566 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\com\residencial\service
+
+16/03/2026  04:21 p.ÿm.    <DIR>          .
+16/03/2026  04:21 p.ÿm.    <DIR>          ..
+16/03/2026  04:21 p.ÿm.             4,382 AuthService.class
+16/03/2026  04:14 p.ÿm.             6,164 SolicitudService.class
+               2 archivos         10,546 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\db
+
+16/03/2026  04:38 p.ÿm.    <DIR>          .
+16/03/2026  04:38 p.ÿm.    <DIR>          ..
+16/03/2026  04:38 p.ÿm.    <DIR>          migration
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\classes\db\migration
+
+16/03/2026  04:38 p.ÿm.    <DIR>          .
+16/03/2026  04:38 p.ÿm.    <DIR>          ..
+16/03/2026  01:41 p.ÿm.             9,523 V1__esquema_inicial.sql
+               1 archivos          9,523 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\generated-sources
+
+16/03/2026  03:54 p.ÿm.    <DIR>          .
+16/03/2026  03:54 p.ÿm.    <DIR>          ..
+16/03/2026  03:54 p.ÿm.    <DIR>          annotations
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\generated-sources\annotations
+
+16/03/2026  03:54 p.ÿm.    <DIR>          .
+16/03/2026  03:54 p.ÿm.    <DIR>          ..
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\generated-test-sources
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+16/03/2026  04:14 p.ÿm.    <DIR>          test-annotations
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\generated-test-sources\test-annotations
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\test-classes
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+16/03/2026  04:14 p.ÿm.    <DIR>          propiedad_residencia
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\backend\propiedad-residencia\target\test-classes\propiedad_residencia
+
+16/03/2026  04:14 p.ÿm.    <DIR>          .
+16/03/2026  04:14 p.ÿm.    <DIR>          ..
+16/03/2026  04:14 p.ÿm.               527 ApplicationTests.class
+               1 archivos            527 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend
+
+16/03/2026  12:46 p.ÿm.    <DIR>          .
+16/03/2026  12:46 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.    <DIR>          assets
+16/03/2026  12:46 p.ÿm.    <DIR>          components
+17/03/2026  06:09 p.ÿm.            16,981 login.html
+16/03/2026  12:59 p.ÿm.    <DIR>          views
+               1 archivos         16,981 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.    <DIR>          css
+16/03/2026  12:37 p.ÿm.    <DIR>          img
+16/03/2026  12:37 p.ÿm.    <DIR>          js
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\css
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.                 0 base.css
+16/03/2026  12:37 p.ÿm.                 0 components.css
+16/03/2026  12:37 p.ÿm.                 0 layout.css
+               3 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\img
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.    <DIR>          components
+16/03/2026  12:37 p.ÿm.    <DIR>          icons
+16/03/2026  12:37 p.ÿm.                 0 logo.svg
+16/03/2026  12:37 p.ÿm.    <DIR>          views
+               1 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\img\components
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.                 0 modal.html
+16/03/2026  12:37 p.ÿm.                 0 sidebar.html
+16/03/2026  12:37 p.ÿm.                 0 topbar.html
+               3 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\img\icons
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\img\views
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.    <DIR>          admin
+16/03/2026  12:37 p.ÿm.    <DIR>          porteria
+16/03/2026  12:37 p.ÿm.    <DIR>          residente
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\img\views\admin
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.                 0 dashboard.html
+16/03/2026  12:37 p.ÿm.                 0 reportes.html
+16/03/2026  12:37 p.ÿm.                 0 residentes.html
+16/03/2026  12:37 p.ÿm.                 0 solicitudes.html
+               4 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\img\views\porteria
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.                 0 dashboard.html
+16/03/2026  12:37 p.ÿm.                 0 login.html
+16/03/2026  12:37 p.ÿm.                 0 visitantes.html
+               3 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\img\views\residente
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+16/03/2026  12:37 p.ÿm.                 0 dashboard.html
+16/03/2026  12:37 p.ÿm.                 0 nueva-solicitud.html
+16/03/2026  12:37 p.ÿm.                 0 reservas.html
+16/03/2026  12:37 p.ÿm.                 0 solicitudes.html
+               4 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\assets\js
+
+16/03/2026  12:37 p.ÿm.    <DIR>          .
+16/03/2026  12:37 p.ÿm.    <DIR>          ..
+17/03/2026  06:07 p.ÿm.             3,427 api.js
+17/03/2026  06:07 p.ÿm.             2,700 auth.js
+16/03/2026  12:37 p.ÿm.                 0 router.js
+16/03/2026  12:37 p.ÿm.                 0 utils.js
+               4 archivos          6,127 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\components
+
+16/03/2026  12:46 p.ÿm.    <DIR>          .
+16/03/2026  12:46 p.ÿm.    <DIR>          ..
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\views
+
+16/03/2026  12:59 p.ÿm.    <DIR>          .
+16/03/2026  12:59 p.ÿm.    <DIR>          ..
+16/03/2026  01:28 p.ÿm.    <DIR>          admin
+16/03/2026  01:35 p.ÿm.    <DIR>          porteria
+16/03/2026  12:58 p.ÿm.    <DIR>          residente
+               0 archivos              0 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\views\admin
+
+16/03/2026  01:28 p.ÿm.    <DIR>          .
+16/03/2026  01:28 p.ÿm.    <DIR>          ..
+16/03/2026  01:02 p.ÿm.            42,457 dashboard.html
+16/03/2026  01:28 p.ÿm.            32,363 reportes.html
+16/03/2026  01:23 p.ÿm.            47,844 residentes.html
+16/03/2026  01:18 p.ÿm.            46,962 solicitudes.html
+               4 archivos        169,626 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\views\porteria
+
+16/03/2026  01:35 p.ÿm.    <DIR>          .
+16/03/2026  01:35 p.ÿm.    <DIR>          ..
+16/03/2026  01:35 p.ÿm.            46,067 dashboard.html
+               1 archivos         46,067 bytes
+
+ Directorio de D:\gitProyectos\hernan\ph-system\frontend\views\residente
+
+16/03/2026  12:58 p.ÿm.    <DIR>          .
+16/03/2026  12:58 p.ÿm.    <DIR>          ..
+16/03/2026  12:44 p.ÿm.            33,667 dashboard.html
+16/03/2026  12:50 p.ÿm.            39,531 nueva-solicitud.html
+16/03/2026  12:58 p.ÿm.            40,587 reservas.html
+16/03/2026  12:54 p.ÿm.            40,441 solicitudes.html
+               4 archivos        154,226 bytes
+
+     Total de archivos en la lista:
+             108 archivos        609,260 bytes
+             179 dirs  15,542,521,856 bytes libres

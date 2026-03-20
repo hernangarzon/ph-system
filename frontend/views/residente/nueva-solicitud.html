@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nueva Solicitud — Residencia</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #16181f;
+      --surface2: #1e2029;
+      --border: #2a2d38;
+      --border2: #333644;
+      --accent: #c8a96e;
+      --accent-dim: #a0834d;
+      --accent-bg: rgba(200, 169, 110, 0.07);
+      --text: #e8e4dc;
+      --muted: #7a7d8a;
+      --muted2: #555868;
+      --green: #6dbe8d;
+      --green-bg: rgba(109, 190, 141, 0.1);
+      --yellow: #e8c76d;
+      --yellow-bg: rgba(232, 199, 109, 0.1);
+      --red: #e07070;
+      --red-bg: rgba(224, 112, 112, 0.1);
+      --blue: #7aaee8;
+      --blue-bg: rgba(122, 174, 232, 0.1);
+      --radius: 10px;
+      --sidebar-w: 240px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── SIDEBAR (mismo que dashboard) ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 1.5rem 1.4rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      border: 1.5px solid var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-text strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1;
+      display: block;
+    }
+
+    .logo-text span {
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.15rem;
+      display: block;
+    }
+
+    .sidebar-user {
+      padding: 1rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-dim), #7a5f35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f1117;
+      flex-shrink: 0;
+    }
+
+    .user-info strong {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .user-info span {
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 1rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .nav-section-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      padding: 0.6rem 0.65rem 0.3rem;
+      margin-top: 0.4rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 3px 3px 0;
+      margin-left: -0.75rem;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--accent);
+      color: #0f1117;
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 0.1rem 0.45rem;
+      border-radius: 100px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .btn-logout:hover {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 60px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.8rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .back-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.18s;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    .topbar-left h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .page {
+      padding: 2rem 1.8rem;
+      flex: 1;
+    }
+
+    /* ── STEPPER ── */
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 2.2rem;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.1s forwards;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex: 1;
+    }
+
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: all 0.3s;
+      background: var(--surface);
+    }
+
+    .step.active .step-circle {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-bg);
+    }
+
+    .step.done .step-circle {
+      border-color: var(--green);
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .step-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      transition: color 0.3s;
+    }
+
+    .step.active .step-label {
+      color: var(--text);
+    }
+
+    .step.done .step-label {
+      color: var(--green);
+    }
+
+    .step-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin: 0 0.5rem;
+      max-width: 60px;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-width: 760px;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.2s forwards;
+    }
+
+    .form-section {
+      padding: 1.6rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    .form-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-section-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+      line-height: 1.5;
+    }
+
+    /* Tipo de solicitud — cards */
+    .tipo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tipo-card {
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .tipo-card:hover {
+      border-color: var(--border2);
+    }
+
+    .tipo-card.selected {
+      border-color: var(--accent);
+      background: var(--accent-bg);
+    }
+
+    .tipo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tipo-card strong {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      display: block;
+    }
+
+    .tipo-card span {
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .tipo-check {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border2);
+      margin-left: auto;
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .tipo-card.selected .tipo-check {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+
+    /* Prioridad */
+    .prioridad-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.4rem;
+    }
+
+    .prio-btn {
+      flex: 1;
+      padding: 0.6rem 0.5rem;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .prio-btn:hover {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    .prio-btn.selected-low {
+      border-color: var(--green);
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .prio-btn.selected-medium {
+      border-color: var(--yellow);
+      background: var(--yellow-bg);
+      color: var(--yellow);
+    }
+
+    .prio-btn.selected-high {
+      border-color: var(--red);
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    /* Fields */
+    .field {
+      margin-bottom: 1.2rem;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--accent-dim);
+      box-shadow: 0 0 0 3px rgba(200, 169, 110, 0.08);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #444750;
+    }
+
+    .field select {
+      cursor: pointer;
+      appearance: none;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.6;
+    }
+
+    .select-wrap {
+      position: relative;
+    }
+
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--muted);
+      pointer-events: none;
+    }
+
+    .field.has-error input,
+    .field.has-error select,
+    .field.has-error textarea {
+      border-color: var(--red);
+    }
+
+    .error-msg {
+      font-size: 0.72rem;
+      color: var(--red);
+      margin-top: 0.35rem;
+      display: none;
+    }
+
+    .field.has-error .error-msg {
+      display: block;
+    }
+
+    .two-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Upload area */
+    .upload-area {
+      border: 1.5px dashed var(--border2);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--surface2);
+    }
+
+    .upload-area:hover,
+    .upload-area.drag-over {
+      border-color: var(--accent-dim);
+      background: var(--accent-bg);
+    }
+
+    .upload-area p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .upload-area span {
+      font-size: 0.7rem;
+      color: var(--muted2);
+    }
+
+    .upload-area input {
+      display: none;
+    }
+
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .file-item span {
+      font-size: 0.78rem;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .file-item small {
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .file-remove {
+      background: none;
+      border: none;
+      color: var(--muted2);
+      cursor: pointer;
+      padding: 0.2rem;
+      transition: color 0.18s;
+      display: flex;
+    }
+
+    .file-remove:hover {
+      color: var(--red);
+    }
+
+    /* Resumen (step 3) */
+    .resumen-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .resumen-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resumen-row:last-child {
+      border-bottom: none;
+    }
+
+    .resumen-key {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      min-width: 130px;
+      padding-top: 0.05rem;
+    }
+
+    .resumen-val {
+      font-size: 0.85rem;
+      color: var(--text);
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    .badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .badge-yellow {
+      background: var(--yellow-bg);
+      color: var(--yellow);
+    }
+
+    .badge-red {
+      background: var(--red-bg);
+      color: var(--red);
+    }
+
+    .badge-green {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    /* Form footer */
+    .form-footer {
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+    }
+
+    .step-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .step-hint b {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .footer-btns {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-back {
+      padding: 0.65rem 1.3rem;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-back:hover {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    .btn-next {
+      padding: 0.65rem 1.5rem;
+      background: var(--accent);
+      color: #0f1117;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-next:hover {
+      background: #d4b87a;
+    }
+
+    .btn-next:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Success state */
+    .success-state {
+      padding: 3rem 2rem;
+      text-align: center;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.5s forwards;
+    }
+
+    .success-state.show {
+      display: flex;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--green-bg);
+      border: 1.5px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .success-state h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .success-state p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 34ch;
+      line-height: 1.6;
+    }
+
+    .ticket-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-dim);
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      letter-spacing: 0.1em;
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .tipo-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .two-fields {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.5">
+          <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <strong>Residencia</strong>
+        <span>Conjunto Cerrado</span>
+      </div>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar">CR</div>
+      <div class="user-info">
+        <strong>Carlos Ramírez</strong>
+        <span>Apto 301 · Torre A</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Principal</span>
+      <a class="nav-item" href="dashboard.html">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </svg>
+        Dashboard
+      </a>
+      <a class="nav-item active" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+          <rect x="9" y="3" width="6" height="4" rx="1" />
+          <path d="M9 12h6M9 16h4" />
+        </svg>
+        Mis Solicitudes
+        <span class="nav-badge">2</span>
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+        Reservas
+      </a>
+      <span class="nav-section-label">Información</span>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        Comunicados
+        <span class="nav-badge">3</span>
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 8v4l3 3" />
+        </svg>
+        Historial de Pagos
+      </a>
+      <a class="nav-item" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>
+        Mi Perfil
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <a class="back-btn" href="dashboard.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </a>
+        <h1>Nueva Solicitud</h1>
+      </div>
+    </header>
+
+    <main class="page">
+
+      <!-- Stepper -->
+      <div class="stepper" id="stepper">
+        <div class="step active" id="step-ind-1">
+          <div class="step-circle" id="sc-1">1</div>
+          <span class="step-label">Tipo</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step-ind-2">
+          <div class="step-circle" id="sc-2">2</div>
+          <span class="step-label">Detalles</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" id="step-ind-3">
+          <div class="step-circle" id="sc-3">3</div>
+          <span class="step-label">Confirmar</span>
+        </div>
+      </div>
+
+      <!-- Form card -->
+      <div class="form-card" id="formCard">
+
+        <!-- ── STEP 1: Tipo ── -->
+        <div class="form-section active" id="section-1">
+          <h2 class="form-section-title">¿Qué tipo de solicitud es?</h2>
+          <p class="form-section-sub">Selecciona la categoría que mejor describe tu solicitud.</p>
+
+          <div class="tipo-grid">
+
+            <button class="tipo-card" data-tipo="mantenimiento" onclick="selectTipo(this)">
+              <div class="tipo-icon" style="background:var(--yellow-bg)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e8c76d" stroke-width="1.8">
+                  <path
+                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                </svg>
+              </div>
+              <strong>Mantenimiento</strong>
+              <span>Reparaciones, daños en zonas comunes o su unidad.</span>
+              <div class="tipo-check">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+            </button>
+
+            <button class="tipo-card" data-tipo="queja" onclick="selectTipo(this)">
+              <div class="tipo-icon" style="background:var(--red-bg)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e07070" stroke-width="1.8">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
+              <strong>Queja</strong>
+              <span>Ruido, conflictos de convivencia u otras molestias.</span>
+              <div class="tipo-check">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+            </button>
+
+            <button class="tipo-card" data-tipo="reserva" onclick="selectTipo(this)">
+              <div class="tipo-icon" style="background:var(--blue-bg)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7aaee8" stroke-width="1.8">
+                  <rect x="3" y="4" width="18" height="18" rx="2" />
+                  <path d="M16 2v4M8 2v4M3 10h18" />
+                </svg>
+              </div>
+              <strong>Reserva</strong>
+              <span>Salón comunal, piscina, BBQ, cancha u otros espacios.</span>
+              <div class="tipo-check">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+            </button>
+
+            <button class="tipo-card" data-tipo="visita" onclick="selectTipo(this)">
+              <div class="tipo-icon" style="background:var(--green-bg)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6dbe8d" stroke-width="1.8">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+              <strong>Registro de visita</strong>
+              <span>Autorizar ingreso de un visitante al conjunto.</span>
+              <div class="tipo-check">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+            </button>
+
+            <button class="tipo-card" data-tipo="pago" onclick="selectTipo(this)">
+              <div class="tipo-icon" style="background:var(--accent-bg)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.8">
+                  <line x1="12" y1="1" x2="12" y2="23" />
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </div>
+              <strong>Pago / Factura</strong>
+              <span>Consultas sobre cuotas, recibos o estados de cuenta.</span>
+              <div class="tipo-check">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+            </button>
+
+            <button class="tipo-card" data-tipo="otro" onclick="selectTipo(this)">
+              <div class="tipo-icon" style="background:var(--surface2)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7a7d8a" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+              </div>
+              <strong>Otro</strong>
+              <span>Cualquier otra solicitud no clasificada anteriormente.</span>
+              <div class="tipo-check">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+            </button>
+
+          </div>
+
+          <!-- Prioridad -->
+          <div style="margin-top:1.4rem;">
+            <label
+              style="display:block;font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">
+              Prioridad
+            </label>
+            <div class="prioridad-row">
+              <button class="prio-btn" data-prio="baja" onclick="selectPrio(this)">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="18 15 12 9 6 15" />
+                </svg>
+                Baja
+              </button>
+              <button class="prio-btn selected-medium" data-prio="media" onclick="selectPrio(this)">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Media
+              </button>
+              <button class="prio-btn" data-prio="alta" onclick="selectPrio(this)">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="18 9 12 15 6 9" />
+                </svg>
+                Alta
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── STEP 2: Detalles ── -->
+        <div class="form-section" id="section-2">
+          <h2 class="form-section-title">Cuéntanos los detalles</h2>
+          <p class="form-section-sub">Entre más información nos des, más rápido podemos atenderte.</p>
+
+          <div class="two-fields">
+            <div class="field" id="f-titulo">
+              <label>Título de la solicitud *</label>
+              <input type="text" id="inp-titulo" placeholder="Ej: Grifo con fuga en cocina" />
+              <span class="error-msg">Este campo es requerido</span>
+            </div>
+            <div class="field">
+              <label>Ubicación</label>
+              <div class="select-wrap">
+                <select id="inp-ubicacion">
+                  <option value="">Selecciona una ubicación</option>
+                  <option value="apto">Mi apartamento (301 - Torre A)</option>
+                  <option value="pasillo">Pasillo / corredor</option>
+                  <option value="lobby">Lobby / recepción</option>
+                  <option value="parqueadero">Parqueadero</option>
+                  <option value="piscina">Piscina</option>
+                  <option value="salon">Salón comunal</option>
+                  <option value="cancha">Cancha deportiva</option>
+                  <option value="otro">Otra área</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field" id="f-desc">
+            <label>Descripción detallada *</label>
+            <textarea id="inp-desc"
+              placeholder="Describe el problema con el mayor detalle posible. Incluye cuándo ocurre, con qué frecuencia, si hay algún riesgo, etc."></textarea>
+            <span class="error-msg">Este campo es requerido</span>
+          </div>
+
+          <div class="field">
+            <label>Adjuntar fotos o documentos <span
+                style="color:var(--muted2);font-weight:400;letter-spacing:0">(opcional)</span></label>
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()"
+              ondragover="handleDrag(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"
+                style="margin:0 auto;display:block;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              <p>Arrastra archivos aquí o <b style="color:var(--accent);cursor:pointer">selecciona desde tu
+                  dispositivo</b></p>
+              <span>PNG, JPG, PDF — Máx. 5MB por archivo</span>
+              <input type="file" id="fileInput" multiple accept="image/*,.pdf" onchange="handleFiles(this.files)" />
+            </div>
+            <div class="file-list" id="fileList"></div>
+          </div>
+
+        </div>
+
+        <!-- ── STEP 3: Confirmar ── -->
+        <div class="form-section" id="section-3">
+          <h2 class="form-section-title">Revisa tu solicitud</h2>
+          <p class="form-section-sub">Verifica que todo esté correcto antes de enviar.</p>
+
+          <div class="resumen-grid" id="resumenGrid">
+            <!-- Llenado por JS -->
+          </div>
+        </div>
+
+        <!-- ── SUCCESS ── -->
+        <div class="success-state" id="successState">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6dbe8d" stroke-width="2">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <h2>¡Solicitud enviada!</h2>
+          <p>Tu solicitud fue registrada. El equipo de administración la revisará pronto.</p>
+          <div class="ticket-num" id="ticketNum">#SOL-2025-0047</div>
+          <p style="font-size:0.75rem;color:var(--muted2)">Guarda este número para hacer seguimiento.</p>
+          <div class="success-actions">
+            <a href="solicitudes.html" class="btn-back"
+              style="text-decoration:none;display:flex;align-items:center;">Ver mis solicitudes</a>
+            <a href="dashboard.html" class="btn-next" style="text-decoration:none;">Ir al Dashboard</a>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="form-footer" id="formFooter">
+          <span class="step-hint">Paso <b id="stepNumLabel">1</b> de 3</span>
+          <div class="footer-btns">
+            <button class="btn-back" id="btnBack" style="display:none" onclick="prevStep()">← Atrás</button>
+            <button class="btn-next" id="btnNext" onclick="nextStep()">
+              <span id="btnNextLabel">Continuar</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/auth.js"></script>
+  <script>
+    Auth.proteger('RESIDENTE');
+  </script>
+  <script>
+    let currentStep = 1;
+    let selectedTipo = null;
+    let selectedPrio = 'media';
+    let uploadedFiles = [];
+
+    // ── Tipo selection ──
+    function selectTipo(card) {
+      document.querySelectorAll('.tipo-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedTipo = card.dataset.tipo;
+    }
+
+    // ── Prioridad selection ──
+    function selectPrio(btn) {
+      document.querySelectorAll('.prio-btn').forEach(b => {
+        b.className = 'prio-btn';
+      });
+      const prio = btn.dataset.prio;
+      selectedPrio = prio;
+      if (prio === 'baja') btn.classList.add('selected-low');
+      if (prio === 'media') btn.classList.add('selected-medium');
+      if (prio === 'alta') btn.classList.add('selected-high');
+    }
+
+    // ── File upload ──
+    function handleFiles(files) {
+      Array.from(files).forEach(file => {
+        if (file.size > 5 * 1024 * 1024) return;
+        uploadedFiles.push(file);
+        renderFileList();
+      });
+    }
+
+    function renderFileList() {
+      const list = document.getElementById('fileList');
+      list.innerHTML = uploadedFiles.map((f, i) => `
+        <div class="file-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8">
+            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+            <polyline points="13 2 13 9 20 9"/>
+          </svg>
+          <span>${f.name}</span>
+          <small>${(f.size / 1024).toFixed(0)} KB</small>
+          <button class="file-remove" onclick="removeFile(${i})">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function removeFile(i) {
+      uploadedFiles.splice(i, 1);
+      renderFileList();
+    }
+
+    function handleDrag(e) { e.preventDefault(); document.getElementById('uploadArea').classList.add('drag-over'); }
+    function handleDragLeave() { document.getElementById('uploadArea').classList.remove('drag-over'); }
+    function handleDrop(e) { e.preventDefault(); handleDragLeave(); handleFiles(e.dataTransfer.files); }
+
+    // ── Stepper logic ──
+    function updateStepper() {
+      for (let i = 1; i <= 3; i++) {
+        const ind = document.getElementById(`step-ind-${i}`);
+        const sc = document.getElementById(`sc-${i}`);
+        ind.classList.remove('active', 'done');
+        if (i < currentStep) {
+          ind.classList.add('done');
+          sc.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`;
+        } else if (i === currentStep) {
+          ind.classList.add('active');
+          sc.textContent = i;
+        } else {
+          sc.textContent = i;
+        }
+      }
+      document.getElementById('stepNumLabel').textContent = currentStep;
+      document.getElementById('btnBack').style.display = currentStep > 1 ? 'block' : 'none';
+      document.getElementById('btnNextLabel').textContent = currentStep === 3 ? 'Enviar solicitud' : 'Continuar';
+    }
+
+    function showSection(n) {
+      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+      const sec = document.getElementById(`section-${n}`);
+      if (sec) sec.classList.add('active');
+    }
+
+    function buildResumen() {
+      const tipoLabels = {
+        mantenimiento: 'Mantenimiento', queja: 'Queja / Convivencia',
+        reserva: 'Reserva de espacio', visita: 'Registro de visita',
+        pago: 'Pago / Factura', otro: 'Otro'
+      };
+      const prioMap = {
+        baja: '<span class="badge badge-green">Baja</span>',
+        media: '<span class="badge badge-yellow">Media</span>',
+        alta: '<span class="badge badge-red">Alta</span>',
+      };
+
+      const rows = [
+        { key: 'Residente', val: 'Carlos Ramírez — Apto 301, Torre A' },
+        { key: 'Tipo', val: tipoLabels[selectedTipo] || '—' },
+        { key: 'Prioridad', val: prioMap[selectedPrio] },
+        { key: 'Título', val: document.getElementById('inp-titulo').value || '—' },
+        { key: 'Ubicación', val: document.getElementById('inp-ubicacion').selectedOptions[0]?.text || '—' },
+        { key: 'Descripción', val: document.getElementById('inp-desc').value || '—' },
+        { key: 'Archivos', val: uploadedFiles.length ? uploadedFiles.map(f => f.name).join(', ') : 'Sin adjuntos' },
+        { key: 'Fecha', val: new Date().toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) },
+      ];
+
+      document.getElementById('resumenGrid').innerHTML = rows.map(r => `
+        <div class="resumen-row">
+          <span class="resumen-key">${r.key}</span>
+          <span class="resumen-val">${r.val}</span>
+        </div>
+      `).join('');
+    }
+
+    function nextStep() {
+      // Validate step 1
+      if (currentStep === 1 && !selectedTipo) {
+        alert('Por favor selecciona el tipo de solicitud.');
+        return;
+      }
+      // Validate step 2
+      if (currentStep === 2) {
+        let valid = true;
+        const titulo = document.getElementById('inp-titulo').value.trim();
+        const desc = document.getElementById('inp-desc').value.trim();
+        const fTit = document.getElementById('f-titulo');
+        const fDesc = document.getElementById('f-desc');
+        fTit.classList.remove('has-error');
+        fDesc.classList.remove('has-error');
+        if (!titulo) { fTit.classList.add('has-error'); valid = false; }
+        if (!desc) { fDesc.classList.add('has-error'); valid = false; }
+        if (!valid) return;
+        buildResumen();
+      }
+      // Submit step 3
+      if (currentStep === 3) {
+        submitForm();
+        return;
+      }
+
+      currentStep++;
+      showSection(currentStep);
+      updateStepper();
+    }
+
+    function prevStep() {
+      if (currentStep <= 1) return;
+      currentStep--;
+      showSection(currentStep);
+      updateStepper();
+    }
+
+    async function submitForm() {
+      const btn = document.getElementById('btnNext');
+      btn.disabled = true;
+      btn.innerHTML = `<span style="display:inline-block;width:14px;height:14px;border:2px solid rgba(0,0,0,0.2);border-top-color:#0f1117;border-radius:50%;animation:spin 0.6s linear infinite"></span>`;
+
+      const usuario = Auth.getUsuario();
+
+      // Mapeo de tipos al enum del backend
+      const tipoMap = {
+        mantenimiento: 'MANTENIMIENTO',
+        queja: 'QUEJA',
+        reserva: 'RESERVA',
+        visita: 'VISITA',
+        pago: 'PAGO',
+        otro: 'OTRO',
+      };
+
+      const prioMap = {
+        baja: 'BAJA',
+        media: 'MEDIA',
+        alta: 'ALTA',
+      };
+
+      const payload = {
+        titulo: document.getElementById('inp-titulo').value.trim(),
+        descripcion: document.getElementById('inp-desc').value.trim(),
+        tipo: tipoMap[selectedTipo] || 'OTRO',
+        prioridad: prioMap[selectedPrio] || 'MEDIA',
+        ubicacion: document.getElementById('inp-ubicacion').selectedOptions[0]?.text || '',
+        residente: { id: usuario.id },
+      };
+
+      try {
+        const result = await SolicitudAPI.crear(payload);
+
+        // Mostrar éxito con número de ticket real
+        document.getElementById('stepper').style.display = 'none';
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('formFooter').style.display = 'none';
+
+        document.getElementById('ticketNum').textContent = result.numero || '#SOL-????';
+
+        const success = document.getElementById('successState');
+        success.classList.add('show');
+
+      } catch (error) {
+        btn.disabled = false;
+        btn.innerHTML = `<span id="btnNextLabel">Enviar solicitud</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>`;
+
+        // Mostrar error
+        const errDiv = document.createElement('div');
+        errDiv.style.cssText = 'color:var(--error);font-size:0.8rem;text-align:center;margin-top:1rem;padding:0.75rem;background:var(--red-bg);border-radius:8px;border:1px solid var(--error)';
+        errDiv.textContent = '❌ Error al enviar la solicitud. Intenta de nuevo.';
+        document.getElementById('formFooter').appendChild(errDiv);
+        setTimeout(() => errDiv.remove(), 4000);
+      }
+    }
+
+    // Spin animation
+    const style = document.createElement('style');
+    style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+    document.head.appendChild(style);
+
+    // Init
+    updateStepper();
+  </script>
+
+</body>
+
+</html>
