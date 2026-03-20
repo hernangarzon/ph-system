@@ -36,7 +36,8 @@ public class AuthService {
         return jwtService.generateToken(
                 usuario.getEmail(),
                 usuario.getRol().name(),
-                usuario.getId());
+                usuario.getId(),
+                usuario.getNombre());
     }
 
     // ── Registro de nuevo residente ──
